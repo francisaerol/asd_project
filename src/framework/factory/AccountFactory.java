@@ -10,9 +10,9 @@ package framework.factory;
  *
  * @author Adit
  */
-public class PersonalAcctFactory extends AccountFactory{
+public class AccountFactory implements IAccountFactory{
 
- 
+    @Override
     public IAccount createAccount(PersonalCustomer cust) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
