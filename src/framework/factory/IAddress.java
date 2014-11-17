@@ -10,17 +10,10 @@ package framework.factory;
  *
  * @author Adit
  */
-public class SimpleAccount {
+public interface IAddress {
     
-   
+    public void getStreet();
+    public void getCity();
+    public void getZip();
     
-    public ICustomerFactory getICustomerFactory(){
-    
-        return new CustomerFactory();
-    }
-    
-    public IAccountFactory getAccountFactory(){
-    
-        return new CompanyAccFactory();
-    }
 }

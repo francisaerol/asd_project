@@ -10,6 +10,8 @@ package framework.factory;
  *
  * @author Adit
  */
-public class IAccount {
+public interface IAccount {
+    
+    public double getInterest();
     
 }

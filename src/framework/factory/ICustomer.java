@@ -6,21 +6,16 @@
 
 package framework.factory;
 
+import java.util.List;
+
 /**
  *
  * @author Adit
  */
-public class SimpleAccount {
+public interface ICustomer {
     
-   
+    public String getName();
+    public List getAddress();
+    public String getEmail();
     
-    public ICustomerFactory getICustomerFactory(){
-    
-        return new CustomerFactory();
-    }
-    
-    public IAccountFactory getAccountFactory(){
-    
-        return new CompanyAccFactory();
-    }
 }
