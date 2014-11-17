@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import framework.factory.IAccount;
-import functor.Functor;
+import framework.functor.Functor;
 
 public class GenerateReport implements Transaction {
 
@@ -23,7 +23,6 @@ public class GenerateReport implements Transaction {
 			IAccount account = acctIter.next();
 			functor.compute(account);
 		}
-
 	}
 
 	@Override
