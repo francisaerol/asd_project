@@ -1,5 +1,6 @@
 package framework.command;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class GenerateReport implements Transaction {
 
 	private List<Account> acctList;
 	private Functor functor;
+	private Date timeStamp;
 
 	public GenerateReport(List<Account> acctList, Functor functor) {
 		this.acctList = acctList;
@@ -23,12 +25,18 @@ public class GenerateReport implements Transaction {
 			Account account = acctIter.next();
 			functor.compute(account);
 		}
+		timeStamp = new Date();
 	}
 
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public String getTimeStamp() {
+		return timeStamp.toString();
 	}
 
 }
