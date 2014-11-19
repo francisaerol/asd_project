@@ -10,6 +10,7 @@ import java.util.Date;
 
 import framework.model.Company;
 import framework.model.Customer;
+import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
 import framework.model.PersonalCustomer;
 
@@ -28,6 +29,12 @@ public class CustomerFactory implements ICustomerFactory {
 	public Customer createPersonalCustomer(String name, String email,
 			Date birthdate) {
 		return new PersonalCustomer(name, email, birthdate);
+	}
+
+	@Override
+	public Customer createPersonalCustomer(String name, String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

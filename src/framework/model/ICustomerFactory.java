@@ -15,4 +15,6 @@ public interface ICustomerFactory {
 
 	public Customer createPersonalCustomer(String name, String email,
 			Date birthdate);
+
+	public ICustomer createPersonalCustomer(String name, String email);
 }
