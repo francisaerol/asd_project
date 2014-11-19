@@ -24,11 +24,12 @@ public abstract class Account implements IAccount {
 	}
 
 	public String getCustomerFlag() {
-		if(customer instanceof PersonalCustomer) {
+		if (customer instanceof PersonalCustomer) {
 			return "P";
-		} return "C";
+		}
+		return "C";
 	}
-	
+
 	public ICustomer getCustomer() {
 		return customer;
 	}
@@ -68,6 +69,10 @@ public abstract class Account implements IAccount {
 
 	public void setAccountManager(AccountManager accountManager) {
 		this.accountManager = accountManager;
+	}
+
+	public List<Entry> getEntries() {
+		return entries;
 	}
 
 }

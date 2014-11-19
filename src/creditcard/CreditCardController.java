@@ -1,59 +1,66 @@
 package creditcard;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.awt.Component;
 
 import javax.swing.UIManager;
+import javax.swing.text.html.MinimalHTMLWriter;
 
-import banking.accounts.BankAccountFactory;
-import banking.accounts.BankFactoryMaker;
-import framework.control.FactoryMaker;
+import creditcard.accounts.CreditCardAccountFactory;
+import creditcard.accounts.CreditCardFactoryMaker;
 import framework.control.IController;
-import framework.control.command.Deposit;
 import framework.control.command.TransactionManager;
 import framework.control.command.TransactionTypes;
-import framework.control.command.Withdraw;
+import framework.manager.AccountManager;
 import framework.model.Account;
 import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
-import framework.view.bank.IFrame;
+import framework.view.IFrame;
+import framework.view.messages.Message;
 
 public class CreditCardController implements IController {
 
-	private IFrame jFrame;
-	private ICustomer cust;
+	private IFrame mainFrame;
+	private ICustomer customer;
 	private TransactionManager tm;
+
+	private ICustomerFactory customerFactory;
+	private CreditCardAccountFactory creditCardAccountFactory;
+	private AccountManager acccountManager;
+
 	private Account acct;
-	private ICustomerFactory customerFactory = FactoryMaker
-			.getCustomerFactory();
-	
-	//private BankAccountFactory af1 = BankFactoryMaker.getBankAccountFactory();
-	private CreditCardFactory af = CreditCardFactoryMaker.getCreditCardFactory();
+	private Message message;
+
+	private String reportName = "";
+	private String report = "";
 
 	@Override
 	public IFrame getFrame() {
-		// TODO Auto-generated method stub
-		return jFrame;
+		return mainFrame;
+	}
+
+	void init() {
+		tm = new TransactionManager();
+		customerFactory = CreditCardFactoryMaker.getCustomerFactory();
+		creditCardAccountFactory = CreditCardFactoryMaker
+				.getCreditCardFactory();
+		message = new Message();
+		acccountManager = AccountManager.getInstance();
 	}
 
 	@Override
 	public void setIFrame(IFrame i) {
-		this.jFrame = i;
-		this.jFrame.setController(this);
-		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
+		this.mainFrame = i;
+		this.mainFrame.setController(this);
+		init();
 
+		try {
 			try {
 				UIManager.setLookAndFeel(UIManager
 						.getSystemLookAndFeelClassName());
 			} catch (Exception e) {
 			}
 
-			// Create a new instance of our application's frame, and make it
-			// visible.
-			this.jFrame.setVisible(true);
+			this.mainFrame.setVisible(true);
 		} catch (Throwable t) {
 			t.printStackTrace();
 			// Ensure the application exits with an error condition.
@@ -64,63 +71,49 @@ public class CreditCardController implements IController {
 
 	@Override
 	public void transact(TransactionTypes type, String acctNumber, Double value) {
-		acct = cust.getAccount(acctNumber);
-		if (acct != null) {
-			switch (type) {
-			case ADD_INTEREST:
-				// tm.exeuteTransaction(new AddInterest(value));
-				break;
-			case CHARGE_ACCOUNT:
-				value = -value;
-				tm.exeuteTransaction(new chargeTheAccount(acct, value));
-				break;
-			case DEPOSIT:
-				tm.exeuteTransaction(new Deposit(acct, value));
-				break;
-			default:
-
-				break;
+		switch(type){
+		case CHARGE_ACCOUNT:
+			acct = acccountManager.getAccount(acctNumber);
+			if(value > 400) {
+				message.info((Component) mainFrame, "Email for high charging: "+value+" has been sent");	
 			}
+			acct.addNewEntry(-value);
+			break;
+		case DEPOSIT:
+			acct = acccountManager.getAccount(acctNumber);
+			acct.addNewEntry(value);
+			break;
+		case GENERATE_REPORT:
+			break;
 		}
 
 	}
 
 	@Override
-	public void addCustomer(String[] details) {
-		System.out.println("==============");
-
-		/*
-		 * 1 - name 2 - st 3 - city 4 - state 5 - zip 6 - birthdate /
-		 * noOfEmployess 7 - email 8 - P or C 9 - S or Ch 10 - amount
-		 */
-
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-		Date expDate = null;
-		try {
-			expDate = formatter.parse(details[6]);
-		} catch (ParseException e) {
-
+	public void addCustomer(String[] rowdata) {
+		
+//		rowdata[0] = "";
+//		rowdata[1] = clientName;
+//		rowdata[2] = street;
+//		rowdata[3] = city;
+//		rowdata[4] = state;
+//		rowdata[5] = zip;
+//		rowdata[6] = email;
+//		rowdata[7] = expdate;
+//		rowdata[8] = accountType;
+//		rowdata[9] = "0";
+		customer = customerFactory.createPersonalCustomer(rowdata[1], rowdata[6]);
+		System.out.println(customer);
+		customer.addAddress(rowdata[2], rowdata[3], rowdata[4], rowdata[5]);
+		String type = rowdata[8];
+		if(type.equalsIgnoreCase("Silver")){
+			acct = creditCardAccountFactory.createSilverAccount(0.0, 0.08); 
+		} else if(type.equalsIgnoreCase("Gold")) {
+			acct = creditCardAccountFactory.createGoldAccout(0.0, 0.1);
+		} else if(type.equalsIgnoreCase("Bronze")) {
+			acct = creditCardAccountFactory.createBronzeAccount(0.0, 0.06);
 		}
-		cust = customerFactory.createPersonalCustomer(details[0], details[5]);
-		cust.addAddress(details[1], details[2], details[3], details[4]);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXX: " + cust.getName());
-
-		if (details[7] == "Gold") {
-			acct = af.createGoldAccounts(0.00, 6.00);
-		} else {
-			cust = customerFactory.createCompanyCustomer(details[1],
-					details[6], Integer.parseInt(details[7]));
-			cust.addAddress(details[2], details[3], details[4], details[5]);
-		}
-		.setAccountCustomer(cust);
-		if (details[9] == "S") {
-
-			acct = af.createSavingsAccount(0, 0);
-		} else {
-			acct = af.createCheckingAccount(0, 0);
-		}
-
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXX: " + cust.getName());
+		
 
 	}
 
