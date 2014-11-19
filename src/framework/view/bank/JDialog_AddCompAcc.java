@@ -91,6 +91,11 @@ public class JDialog_AddCompAcc extends javax.swing.JDialog {
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Calcel.addActionListener(lSymAction);
+                
+                
+                
+                JRadioButton_Chk.addActionListener(lSymAction);
+                JRadioButton_Sav.addActionListener(lSymAction);
 		// }}
 	}
 
@@ -119,13 +124,41 @@ public class JDialog_AddCompAcc extends javax.swing.JDialog {
 	// }}
 
 	class SymAction implements java.awt.event.ActionListener {
+                @Override
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();
 			if (object == JButton_OK)
 				JButtonOK_actionPerformed(event);
 			else if (object == JButton_Calcel)
 				JButtonCalcel_actionPerformed(event);
+                        else if(object == JRadioButton_Chk){
+                        
+                            JButtonChecKing_actionPerformed(event);
+                            
+                        }else if(object == JRadioButton_Sav){
+                        
+                            JButtonSaving_actionPerformed(event);
+                            
+                        }
 		}
+	}
+        
+       void JButtonChecKing_actionPerformed(java.awt.event.ActionEvent event) {
+
+        
+			JRadioButton_Sav.setSelected(false);
+	
+           
+
+	}
+       
+         void JButtonSaving_actionPerformed(java.awt.event.ActionEvent event) {
+
+         
+			JRadioButton_Chk.setSelected(false);
+	
+           
+
 	}
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {

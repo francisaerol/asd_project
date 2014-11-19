@@ -120,6 +120,9 @@ public class JDialog_AddPAcc extends javax.swing.JDialog {
 	javax.swing.JLabel JLabel8 = new javax.swing.JLabel();
 
 	// }}
+        
+        
+        
 
 	class SymMouse extends java.awt.event.MouseAdapter {
 		public void mouseClicked(java.awt.event.MouseEvent event) {
@@ -177,4 +180,27 @@ public class JDialog_AddPAcc extends javax.swing.JDialog {
 		// make this frame invisible if Cancel button is clicked
 		dispose();
 	}
+        
+        
+        
+          void JButtonChecKing_actionPerformed(java.awt.event.ActionEvent event) {
+
+        
+			JRadioButton_Sav.setSelected(false);
+	
+           
+
+	}
+       
+         void JButtonSaving_actionPerformed(java.awt.event.ActionEvent event) {
+
+         
+			JRadioButton_Chk.setSelected(false);
+	
+           
+
+	}
+         
+         
+         
 }
