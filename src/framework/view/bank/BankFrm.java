@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
 import framework.control.IController;
-import framework.control.command.TransactionTypes;
 
 /**
  * A basic JFC based application.
@@ -35,11 +34,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		setTitle("Bank Application.");
 		setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setSize(575, 310);
+		setSize(705, 310);
 		setVisible(false);
 		JPanel1.setLayout(null);
 		getContentPane().add(BorderLayout.CENTER, JPanel1);
-		JPanel1.setBounds(0, 0, 575, 310);
+		JPanel1.setBounds(0, 0, 695, 310);
 		/*
 		 * /Add five buttons on the pane /for Adding personal account, Adding
 		 * company account /Deposit, Withdraw and Exit from the system
@@ -72,18 +71,29 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JButton_PerAC.setText("Add personal account");
 		JPanel1.add(JButton_PerAC);
 		JButton_PerAC.setBounds(24, 20, 192, 33);
+                
 		JButton_CompAC.setText("Add company account");
 		JButton_CompAC.setActionCommand("jbutton");
 		JPanel1.add(JButton_CompAC);
+                
+                
 		JButton_CompAC.setBounds(240, 20, 192, 33);
 		JButton_Deposit.setText("Deposit");
 		JPanel1.add(JButton_Deposit);
 		JButton_Deposit.setBounds(468, 104, 96, 33);
 		JButton_Withdraw.setText("Withdraw");
 		JPanel1.add(JButton_Withdraw);
-		JButton_Addinterest.setBounds(448, 20, 106, 33);
+                
+                JButton_GenerateBill.setBounds(448, 20, 126, 33);
+		JButton_GenerateBill.setText("Generate Report");
+		JPanel1.add(JButton_GenerateBill);
+                
+		JButton_Addinterest.setBounds(588, 20, 106, 33);
 		JButton_Addinterest.setText("Add interest");
 		JPanel1.add(JButton_Addinterest);
+                
+                
+                
 		JButton_Withdraw.setBounds(468, 164, 96, 33);
 		JButton_Exit.setText("Exit");
 		JPanel1.add(JButton_Exit);
@@ -103,6 +113,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JButton_Deposit.addActionListener(lSymAction);
 		JButton_Withdraw.addActionListener(lSymAction);
 		JButton_Addinterest.addActionListener(lSymAction);
+                JButton_GenerateBill.addActionListener(lSymAction);
 
 	}
 
@@ -117,6 +128,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	javax.swing.JButton JButton_Deposit = new javax.swing.JButton();
 	javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
 	javax.swing.JButton JButton_Addinterest = new javax.swing.JButton();
+        javax.swing.JButton JButton_GenerateBill = new javax.swing.JButton();
 	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
 
 	void exitApplication() {
@@ -137,6 +149,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	void BankFrm_windowClosing(java.awt.event.WindowEvent event) {
+		// to do: code goes here.
 
 		BankFrm_windowClosing_Interaction1(event);
 	}
@@ -149,7 +162,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	class SymAction implements java.awt.event.ActionListener {
+                @Override
 		public void actionPerformed(java.awt.event.ActionEvent event) {
+                    
+                    
+                    
 			Object object = event.getSource();
 			if (object == JButton_Exit)
 				JButtonExit_actionPerformed(event);
@@ -163,12 +180,24 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 				JButtonWithdraw_actionPerformed(event);
 			else if (object == JButton_Addinterest)
 				JButtonAddinterest_actionPerformed(event);
+                        else if(object == JButton_GenerateBill){
+                                JButtonGenerateBill_actionPerformed(event);
+                        }
 
 		}
 	}
 
 	// When the Exit button is pressed this code gets executed
 	// this will exit from the system
+        
+        void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {
+            
+		//Generating Bill
+            
+                JDialog_Report Rpac = new JDialog_Report();
+		Rpac.setBounds(450, 20, 300, 330);
+		Rpac.show();
+	}
 	void JButtonExit_actionPerformed(java.awt.event.ActionEvent event) {
 		System.exit(0);
 	}
@@ -199,15 +228,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[10] = "0";
 			
 //			System.out.println(control);
-			String[] newArr = new String[11];
+			String[] newArr = new String[15];
 			int x =0;
 			for (Object o: rowdata){
-				if(o!= null) {
-					newArr[x] = o.toString();
-					} else {
-						newArr[x] = "";
-					}
-					x++;
+				newArr[x] = o.toString();
+				x++;
 			}
 			control.addCustomer(newArr);
 			rowdata[0] = control.getAcctNo();
@@ -239,22 +264,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[5] = zip;
 			rowdata[6] = noOfEmp;
 			rowdata[7] = email;
-			rowdata[8] = "C";
+			rowdata[8] = "P";
 			rowdata[9] = accountType;
 			rowdata[10] = "0";
 			
-			String[] newArr = new String[11];
-			int x =0;
-			for (Object o: rowdata){
-				if(o!= null) {
-				newArr[x] = o.toString();
-				} else {
-					newArr[x] = "";
-				}
-				x++;
-			}
-			control.addCustomer(newArr);
-			rowdata[0] = control.getAcctNo();
+			model.addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;
 		}
@@ -266,7 +280,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
 			String accnr = (String) model.getValueAt(selection, 0);
-			
 
 			// Show the dialog for adding deposit amount for the current mane
 			JDialog_Deposit dep = new JDialog_Deposit(myframe, accnr);
@@ -274,10 +287,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			dep.show();
 
 			// compute new amount
-			double deposit = Double.parseDouble(amountDeposit);
-			control.transact(TransactionTypes.DEPOSIT, accnr, deposit);
-			System.out.println("====:"+control.getBalance());
-			model.setValueAt(String.valueOf(control.getBalance()), selection, 10);
+//			long deposit = Long.parseLong(amountDeposit);
+//			String samount = (String) model.getValueAt(selection, 5);
+//			long currentamount = Long.parseLong(samount);
+//			long newamount = currentamount + deposit;
+//			model.setValueAt(String.valueOf(newamount), selection, 5);
 		}
 
 	}
@@ -287,21 +301,22 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
 			String accnr = (String) model.getValueAt(selection, 0);
-			
+
 			// Show the dialog for adding withdraw amount for the current mane
 			JDialog_Withdraw wd = new JDialog_Withdraw(myframe, accnr);
 			wd.setBounds(430, 15, 275, 140);
 			wd.show();
 
 			// compute new amount
-			Double deposit = Double.parseDouble(amountDeposit);
-			control.transact(TransactionTypes.WITHDRAW, accnr, deposit);
-			control.transact(TransactionTypes.ADD_INTEREST, null, 12.00);
-			model.setValueAt(String.valueOf(control.getBalance()), selection, 10);
-			if (control.getBalance() < 0) {
+			long deposit = Long.parseLong(amountDeposit);
+			String samount = (String) model.getValueAt(selection, 5);
+			long currentamount = Long.parseLong(samount);
+			long newamount = currentamount - deposit;
+			model.setValueAt(String.valueOf(newamount), selection, 5);
+			if (newamount < 0) {
 				JOptionPane.showMessageDialog(JButton_Withdraw,
 						" Account " + accnr + " : balance is negative: $"
-								+ String.valueOf(control.getBalance()) + " !",
+								+ String.valueOf(newamount) + " !",
 						"Warning: negative balance",
 						JOptionPane.WARNING_MESSAGE);
 			}
@@ -310,7 +325,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event) {
-		control.transact(TransactionTypes.ADD_INTEREST, null, 12.00);
 		JOptionPane.showMessageDialog(JButton_Addinterest,
 				"Add interest to all accounts", "Add interest to all accounts",
 				JOptionPane.WARNING_MESSAGE);
