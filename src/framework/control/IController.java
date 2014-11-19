@@ -16,7 +16,6 @@ public interface IController {
 	public IFrame getFrame();
 
 	public void setIFrame(IFrame i);
-
 	public void transact(TransactionTypes type, Double value);
         
         public ICustomerFactory getCustomerFactory();
