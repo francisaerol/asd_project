@@ -1,9 +1,12 @@
 package banking;
 
-import javax.swing.JFrame;
-
 import framework.control.IController;
+import framework.control.command.AddInterest;
+import framework.control.command.Deposit;
+import framework.control.command.TransactionManager;
 import framework.control.command.TransactionTypes;
+import framework.control.command.Withdraw;
+import framework.model.Account;
 import framework.model.ICustomer;
 import framework.view.bank.IFrame;
 
@@ -11,6 +14,8 @@ public class BankController implements IController {
 
 	private IFrame jframe;
 	private ICustomer cust;
+	private TransactionManager tm;
+	private Account acct;
 
 	@Override
 	public IFrame getFrame() {
@@ -26,22 +31,35 @@ public class BankController implements IController {
 
 	}
 
-	public void addPersonalCustomer(String[] row) {
-		// create the person
-		// cust = Fac.createCustomer();
-	}
-
 	@Override
-	public void transact(TransactionTypes type, Double value) {
-		switch (type) {
-		case ADD_INTEREST:
-			break;
-		case WITHDRAW:
-			break;
-		default:
-			break;
+	public void transact(TransactionTypes type, String acctNumber, Double value) {
+		acct = cust.getAccount(acctNumber);
+		if (acct != null) {
+			switch (type) {
+			case ADD_INTEREST:
+//				tm.exeuteTransaction(new AddInterest(value));
+				break;
+			case WITHDRAW:
+				value = -value;
+				tm.exeuteTransaction(new Withdraw(acct, value));
+				break;
+			case DEPOSIT:
+				tm.exeuteTransaction(new Deposit(acct, value));
+				break;
+			default:
+				
+				break;
+			}
 		}
 
 	}
+
+
+	@Override
+	public void addCustomer(String[] details) {
+		// TODO Auto-generated method stub
+
+	}
+
 
 }

@@ -5,9 +5,12 @@ import framework.view.bank.IFrame;
 
 public interface IController {
 
-	public abstract IFrame getFrame();
+	public IFrame getFrame();
 
-	public abstract void setIFrame(IFrame i);
+	public void setIFrame(IFrame i);
 
-	public abstract void transact(TransactionTypes type, Double value);
+	public void addCustomer(String[] details);
+
+	void transact(TransactionTypes type, String acctNumber, Double value);
+
 }

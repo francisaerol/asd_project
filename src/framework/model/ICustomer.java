@@ -13,6 +13,7 @@ public interface ICustomer {
 	public void addAddress(String street, String city, String state, String zip);
 
 	public void addAccount(Account acct);
-	
+
+	public Account getAccount(String acctNumber);
 
 }
