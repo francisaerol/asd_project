@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 
 import framework.control.IController;
 import framework.control.command.TransactionTypes;
+import framework.view.IFrame;
+import framework.view.JDialog_Report;
 import framework.view.messages.Message;
 
 /**
@@ -240,7 +242,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			}
 			control.addCustomer(newArr);
 			rowdata[0] = control.getAcctNo();
-			msg.info(myframe, "Personal Account " + rowdata[0] + " has created");
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
@@ -285,7 +286,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			}
 			control.addCustomer(newArr);
 			rowdata[0] = control.getAcctNo();
-			msg.info(myframe, "Company Account " + rowdata[0] + " has created");
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
@@ -310,8 +310,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			control.transact(TransactionTypes.DEPOSIT, accnr, deposit);
 			model.setValueAt(String.valueOf(control.getBalance()), selection,
 					10);
-			msg.info(myframe, "$" + deposit + " has depositied to Account "
-					+ accnr);
 
 		}
 
@@ -347,7 +345,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	boolean interestFlag = false;
 
 	void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event) {
-//		JDialog_AddInterest pac = new JDialog_AddInterest(myframe);
+		JDialog_AddInterest pac = new JDialog_AddInterest(myframe);
 		pac.setBounds(430, 15, 200, 200);
 		pac.setVisible(true);
 		if (interestFlag) {

@@ -1,6 +1,7 @@
 package framework.view.bank;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 public class JDialog_AddPAcc extends javax.swing.JDialog {

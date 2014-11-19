@@ -33,8 +33,7 @@ public class CustomerFactory implements ICustomerFactory {
 
 	@Override
 	public Customer createPersonalCustomer(String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		 return new PersonalCustomer(name, email);
 	}
 
 }

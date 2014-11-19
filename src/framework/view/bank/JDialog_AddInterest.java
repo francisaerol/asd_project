@@ -2,8 +2,6 @@ package framework.view.bank;
 
 import javax.swing.JDialog;
 
-import framework.view.bank.JDialog_AddCompAcc.SymAction;
-
 public class JDialog_AddInterest extends JDialog {
 	private BankFrm parentframe;
 

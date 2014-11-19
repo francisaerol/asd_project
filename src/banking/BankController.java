@@ -10,7 +10,6 @@ import javax.swing.UIManager;
 import banking.accounts.BankAccountFactory;
 import banking.accounts.BankFactoryMaker;
 import banking.report.GenerateAccountReport;
-
 import framework.control.FactoryMaker;
 import framework.control.IController;
 import framework.control.command.AddInterest;
@@ -24,7 +23,7 @@ import framework.manager.AccountManager;
 import framework.model.Account;
 import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
-import framework.view.bank.IFrame;
+import framework.view.IFrame;
 import framework.view.messages.Message;
 
 public class BankController implements IController {
@@ -35,7 +34,7 @@ public class BankController implements IController {
 
 	private ICustomerFactory customerFactory;
 	private BankAccountFactory bankAccountFactory;
-	private AccountManager acccountManager = AccountManager.getInstance();
+	private AccountManager acccountManager;
 
 	private Account acct;
 	private Message message;
@@ -48,6 +47,7 @@ public class BankController implements IController {
 		customerFactory = FactoryMaker.getCustomerFactory();
 		bankAccountFactory = BankFactoryMaker.getBankAccountFactory();
 		message = new Message();
+		acccountManager = AccountManager.getInstance();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package framework.view.bank;
 
+
 public class JDialog_Withdraw extends javax.swing.JDialog {
 
 	private BankFrm parentframe;

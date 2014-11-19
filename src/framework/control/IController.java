@@ -1,7 +1,7 @@
 package framework.control;
 
 import framework.control.command.TransactionTypes;
-import framework.view.bank.IFrame;
+import framework.view.IFrame;
 
 public interface IController {
 

@@ -1,5 +1,9 @@
 package framework.view.bank;
 
+import javax.swing.JFrame;
+
+import framework.view.ccard.CardFrm;
+
 public class JDialog_Deposit extends javax.swing.JDialog {
 
 	private BankFrm parentframe;
