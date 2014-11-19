@@ -20,6 +20,10 @@ public class PersonalCustomer extends Customer implements IPersonal {
 		super(name, email);
 		this.birthdate = birthdate;
 	}
+	
+	public PersonalCustomer(String name,String email) {
+		super(name,email);
+	}
 
 	@Override
 	public Date getBirthdate() {
