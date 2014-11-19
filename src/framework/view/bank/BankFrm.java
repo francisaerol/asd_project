@@ -3,13 +3,16 @@ package framework.view.bank;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
+
+import framework.control.IController;
 
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends javax.swing.JFrame {
+public class BankFrm extends javax.swing.JFrame implements IFrame{
 	/****
 	 * init variables in the object
 	 ****/
@@ -21,7 +24,9 @@ public class BankFrm extends javax.swing.JFrame {
 	private JScrollPane JScrollPane1;
 	BankFrm myframe;
 	private Object rowdata[];
-
+	
+	private IController control;
+	
 	public BankFrm() {
 		myframe = this;
 
@@ -200,6 +205,7 @@ public class BankFrm extends javax.swing.JFrame {
 			rowdata[4] = accountType;
 			rowdata[5] = "0";
 			model.addRow(rowdata);
+			
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;
 		}
@@ -285,5 +291,11 @@ public class BankFrm extends javax.swing.JFrame {
 				"Add interest to all accounts", "Add interest to all accounts",
 				JOptionPane.WARNING_MESSAGE);
 
+	}
+
+	@Override
+	public void setController(IController control) {
+		this.control = control;
+		
 	}
 }
