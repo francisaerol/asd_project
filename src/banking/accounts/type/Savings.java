@@ -1,24 +1,18 @@
 package banking.accounts.type;
 
-import framework.manager.AccountManager;
 import framework.model.Account;
+import framework.model.ICustomer;
 
 public class Savings extends Account {
-
-	public Savings(Double balance, Double interest) {
-		super(balance, interest);
+	public Savings(Double balance, Double interest,ICustomer cust) {
+		super(balance, interest, cust);
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		Double newInterest = (Double) super.getAccountManager().getElement();
+		super.setInterest(newInterest);
 	}
 
-	@Override
-	public void setManager(AccountManager mnr) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

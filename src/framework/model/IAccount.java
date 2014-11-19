@@ -10,6 +10,4 @@ public interface IAccount {
 	public String getId();
 
 	public void update();
-
-	public void setManager(AccountManager mnr);
 }

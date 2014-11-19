@@ -14,13 +14,13 @@ public class BankAccountFactory implements IAccountFactory {
 	}
 
 	public Checking createCheckingAccount(double balance, double interest) {
-		Checking c = new Checking(balance, interest);
+		Checking c = new Checking(balance, interest,customer);
 		customer.addAccount(c);
 		return c;
 	}
 
 	public Savings createSavingsAccount(double balance, double interest) {
-		Savings s = new Savings(balance, interest);
+		Savings s = new Savings(balance, interest,customer);
 		customer.addAccount(s);
 		return s;
 	}

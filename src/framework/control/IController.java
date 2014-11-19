@@ -15,4 +15,5 @@ public interface IController {
 
 	String getAcctNo();
 
+	Double getBalance();
 }

@@ -1,5 +1,6 @@
 package banking;
 
+import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,16 +11,17 @@ import banking.accounts.BankAccountFactory;
 import banking.accounts.BankFactoryMaker;
 import framework.control.FactoryMaker;
 import framework.control.IController;
+import framework.control.command.AddInterest;
 import framework.control.command.Deposit;
 import framework.control.command.TransactionManager;
 import framework.control.command.TransactionTypes;
 import framework.control.command.Withdraw;
+import framework.manager.AccountManager;
 import framework.model.Account;
-import framework.model.IAccountFactory;
 import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
-import framework.view.bank.BankFrm;
 import framework.view.bank.IFrame;
+import framework.view.messages.Message;
 
 public class BankController implements IController {
 
@@ -27,9 +29,11 @@ public class BankController implements IController {
 	private ICustomer cust;
 	private TransactionManager tm;
 	private Account acct;
+	private AccountManager acccountManager = AccountManager.getInstance();
 	private ICustomerFactory customerFactory = FactoryMaker
 			.getCustomerFactory();
 	private BankAccountFactory af = BankFactoryMaker.getBankAccountFactory();
+	private Message message = new Message();
 
 	@Override
 	public IFrame getFrame() {
@@ -40,25 +44,20 @@ public class BankController implements IController {
 	@Override
 	public void setIFrame(IFrame jframe) {
 		this.jframe = jframe;
-
 		this.jframe.setController(this);
 
-		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
+		tm = new TransactionManager();
 
+		try {
 			try {
 				UIManager.setLookAndFeel(UIManager
 						.getSystemLookAndFeelClassName());
 			} catch (Exception e) {
 			}
 
-			// Create a new instance of our application's frame, and make it
-			// visible.
 			this.jframe.setVisible(true);
 		} catch (Throwable t) {
 			t.printStackTrace();
-			// Ensure the application exits with an error condition.
 			System.exit(1);
 		}
 
@@ -66,32 +65,33 @@ public class BankController implements IController {
 
 	@Override
 	public void transact(TransactionTypes type, String acctNumber, Double value) {
-		acct = cust.getAccount(acctNumber);
+		
 		if (acct != null) {
 			switch (type) {
 			case ADD_INTEREST:
-				// tm.exeuteTransaction(new AddInterest(value));
+				tm.exeuteTransaction(new AddInterest(value));
 				break;
 			case WITHDRAW:
+				acct = cust.getAccount(acctNumber);
 				value = -value;
 				tm.exeuteTransaction(new Withdraw(acct, value));
 				break;
 			case DEPOSIT:
+				acct = cust.getAccount(acctNumber);
 				tm.exeuteTransaction(new Deposit(acct, value));
+				if(acct.getCustomerFlag() =="P"){
+					message.info((Component) this.jframe, "An email has been sent to"+acct.getCustomer().getEmail());
+				}
 				break;
 			default:
 
 				break;
 			}
 		}
-
 	}
 
 	@Override
-	public void addCustomer(String[] row) {
-		System.out.println("==============");
-		String[] details = (String[]) row;
-
+	public void addCustomer(String[] details) {
 		/*
 		 * 1 - name 2 - st 3 - city 4 - state 5 - zip 6 - birthdate /
 		 * noOfEmployess 7 - email 8 - P or C 9 - S or Ch 10 - amount
@@ -103,6 +103,7 @@ public class BankController implements IController {
 			try {
 				bdate = formatter.parse(details[6]);
 			} catch (ParseException e) {
+				message.error((Component) this.jframe, "Wrong Birthday");
 
 			}
 			cust = customerFactory.createPersonalCustomer(details[1],
@@ -116,19 +117,22 @@ public class BankController implements IController {
 		}
 		af.setAccountCustomer(cust);
 		if (details[9] == "S") {
-
 			acct = af.createSavingsAccount(0, 0);
 		} else {
 			acct = af.createCheckingAccount(0, 0);
 		}
 
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXX: " + cust.getName());
+		acccountManager.addAccount(acct);
 	}
 
 	@Override
 	public String getAcctNo() {
-		// TODO Auto-generated method stub
 		return acct.getId();
+	}
+
+	@Override
+	public Double getBalance() {
+		return acct.getBalance();
 	}
 
 }
