@@ -1,6 +1,5 @@
 package banking.accounts.type;
 
-import framework.manager.AccountManager;
 import framework.model.Account;
 import framework.model.ICustomer;
 

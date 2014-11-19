@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import framework.control.functor.Functor;
+import framework.manager.AccountManager;
 import framework.model.Account;
 
 public class GenerateReport implements Transaction {
@@ -13,8 +14,8 @@ public class GenerateReport implements Transaction {
 	private Functor functor;
 	private Date timeStamp;
 
-	public GenerateReport(List<Account> acctList, Functor functor) {
-		this.acctList = acctList;
+	public GenerateReport(Functor functor) {
+		this.acctList = AccountManager.getInstance().getAccountList();
 		this.functor = functor;
 	}
 

@@ -9,11 +9,6 @@ public class Client {
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException {
 
-		System.out.println(BankController.class.toString());
-		// if (args.length == 0) {
-		// IController c = (IController) new Controller();
-		// } else if (args.length > 0) {
-
 		try {
 			
 			Class c = Class.forName("banking.BankController");

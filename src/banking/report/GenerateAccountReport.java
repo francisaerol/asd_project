@@ -3,18 +3,18 @@ package banking.report;
 import framework.control.functor.Functor;
 import framework.model.Account;
 
-public class GenerateAccountReport<T, R> implements Functor<T, R> {
+public class GenerateAccountReport implements Functor<Account, String> {
+	private String report = "ID \t Balance \t Customer \n";
 
 	@Override
-	public void compute(T element) {
-		Account a = (Account) element;
-
+	public void compute(Account element) {
+		report += element.getId() + "\t" + element.getBalance() + "\t"
+				+ element.getCustomer().getName() + "\n";
 	}
 
 	@Override
-	public R getValue() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getValue() {
+		return report;
 	}
 
 }

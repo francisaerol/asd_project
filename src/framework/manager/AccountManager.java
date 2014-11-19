@@ -53,7 +53,7 @@ public class AccountManager {
 		this.element = element;
 		for (Account a : accountList) {
 			a.update();
-			System.out.println("Interest: "+a.getInterest());
+			System.out.println("Interest: " + a.getInterest());
 		}
 	}
 
@@ -61,4 +61,7 @@ public class AccountManager {
 		return element;
 	}
 
+	public static List<Account> getAccountList() {
+		return accountList;
+	}
 }

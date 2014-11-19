@@ -16,4 +16,9 @@ public interface IController {
 	String getAcctNo();
 
 	Double getBalance();
+
+	String getReportName();
+
+	String getReport();
+
 }
