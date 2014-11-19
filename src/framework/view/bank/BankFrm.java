@@ -149,7 +149,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	class SymAction implements java.awt.event.ActionListener {
+                @Override
 		public void actionPerformed(java.awt.event.ActionEvent event) {
+                    
+                    
+                    
 			Object object = event.getSource();
 			if (object == JButton_Exit)
 				JButtonExit_actionPerformed(event);
@@ -258,11 +262,11 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			dep.show();
 
 			// compute new amount
-			long deposit = Long.parseLong(amountDeposit);
-			String samount = (String) model.getValueAt(selection, 5);
-			long currentamount = Long.parseLong(samount);
-			long newamount = currentamount + deposit;
-			model.setValueAt(String.valueOf(newamount), selection, 5);
+//			long deposit = Long.parseLong(amountDeposit);
+//			String samount = (String) model.getValueAt(selection, 5);
+//			long currentamount = Long.parseLong(samount);
+//			long newamount = currentamount + deposit;
+//			model.setValueAt(String.valueOf(newamount), selection, 5);
 		}
 
 	}
