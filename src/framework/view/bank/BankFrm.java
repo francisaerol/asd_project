@@ -17,7 +17,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	 * init variables in the object
 	 ****/
 	String accountnr, clientName, street, city, zip, state, email, accountType,
-			clientType, amountDeposit;
+			clientType, amountDeposit, birthDate;
 	boolean newaccount;
 	private DefaultTableModel model;
 	private JTable JTable1;
@@ -52,6 +52,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		model.addColumn("Ch/S");
 		model.addColumn("Amount");
 		model.addColumn("Email");
+		model.addColumn("BirthDate");
 		rowdata = new Object[8];
 		newaccount = false;
 
@@ -206,6 +207,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[4] = accountType;
 			rowdata[5] = "0";
 			rowdata[6] = email;
+			rowdata[7] = birthDate;
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
@@ -233,6 +235,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[4] = accountType;
 			rowdata[5] = "0";
 			rowdata[6] = email;
+			rowdata[7] = birthDate;
 			model.addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;
