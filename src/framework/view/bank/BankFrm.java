@@ -1,6 +1,7 @@
 package framework.view.bank;
 
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
@@ -58,7 +59,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		model.addColumn("Amount");
 		
 		
-		rowdata = new Object[8];
+		rowdata = new Object[11];
 		newaccount = false;
 
 		JPanel1.add(JScrollPane1);
@@ -108,26 +109,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	 * The entry point for this application. Sets the Look and Feel to the
 	 * System Look and Feel. Creates a new JFrame1 and makes it visible.
 	 *****************************************************/
-	static public void main(String args[]) {
-		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
-
-			try {
-				UIManager.setLookAndFeel(UIManager
-						.getSystemLookAndFeelClassName());
-			} catch (Exception e) {
-			}
-
-			// Create a new instance of our application's frame, and make it
-			// visible.
-			(new BankFrm()).setVisible(true);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			// Ensure the application exits with an error condition.
-			System.exit(1);
-		}
-	}
 
 	javax.swing.JPanel JPanel1 = new javax.swing.JPanel();
 	javax.swing.JButton JButton_PerAC = new javax.swing.JButton();
@@ -217,7 +198,15 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[9] = accountType;
 			rowdata[10] = "0";
 			
-			
+//			System.out.println(control);
+			String[] newArr = new String[15];
+			int x =0;
+			for (Object o: rowdata){
+				newArr[x] = o.toString();
+				x++;
+			}
+			control.addCustomer(newArr);
+			rowdata[0] = control.getAcctNo();
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);

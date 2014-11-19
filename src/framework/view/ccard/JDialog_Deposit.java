@@ -1,6 +1,4 @@
-
-package ccard;
-
+package framework.view.ccard;
  
 
  

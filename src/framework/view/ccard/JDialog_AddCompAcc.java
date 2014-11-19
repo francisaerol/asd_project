@@ -1,5 +1,4 @@
-
-import ccard.CardFrm;
+package framework.view.ccard;
 import java.awt.*;
 import javax.swing.*;
 

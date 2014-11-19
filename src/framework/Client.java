@@ -15,6 +15,7 @@ public class Client {
 		// } else if (args.length > 0) {
 
 		try {
+			
 			Class c = Class.forName("banking.BankController");
 			IController b = (IController) c.newInstance();
 			b.setIFrame(new BankFrm());

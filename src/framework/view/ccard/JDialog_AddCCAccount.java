@@ -1,7 +1,4 @@
-/*
-		A basic implementation of the JDialog class.
-*/
-package ccard;
+package framework.view.ccard;
  
  
 

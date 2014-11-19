@@ -1,4 +1,4 @@
-package ccard;
+package framework.view.ccard;
 import java.awt.*;
 
 import javax.swing.table.DefaultTableModel;
