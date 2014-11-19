@@ -12,11 +12,11 @@ import framework.control.IController;
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends javax.swing.JFrame implements IFrame{
+public class BankFrm extends javax.swing.JFrame implements IFrame {
 	/****
 	 * init variables in the object
 	 ****/
-	String accountnr, clientName, street, city, zip, state, accountType,
+	String accountnr, clientName, street, city, zip, state, email, accountType,
 			clientType, amountDeposit;
 	boolean newaccount;
 	private DefaultTableModel model;
@@ -24,9 +24,9 @@ public class BankFrm extends javax.swing.JFrame implements IFrame{
 	private JScrollPane JScrollPane1;
 	BankFrm myframe;
 	private Object rowdata[];
-	
+
 	private IController control;
-	
+
 	public BankFrm() {
 		myframe = this;
 
@@ -51,6 +51,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame{
 		model.addColumn("P/C");
 		model.addColumn("Ch/S");
 		model.addColumn("Amount");
+		model.addColumn("Email");
 		rowdata = new Object[8];
 		newaccount = false;
 
@@ -204,8 +205,9 @@ public class BankFrm extends javax.swing.JFrame implements IFrame{
 			rowdata[3] = "P";
 			rowdata[4] = accountType;
 			rowdata[5] = "0";
+			rowdata[6] = email;
 			model.addRow(rowdata);
-			
+
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;
 		}
@@ -230,6 +232,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame{
 			rowdata[3] = "C";
 			rowdata[4] = accountType;
 			rowdata[5] = "0";
+			rowdata[6] = email;
 			model.addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;
@@ -296,6 +299,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame{
 	@Override
 	public void setController(IController control) {
 		this.control = control;
-		
+
 	}
 }
