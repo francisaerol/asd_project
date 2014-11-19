@@ -1,12 +1,18 @@
 package banking;
 
-import javax.swing.JFrame;
-
 import framework.control.IController;
+import framework.control.command.AddInterest;
+import framework.control.command.Deposit;
+import framework.control.command.TransactionManager;
 import framework.control.command.TransactionTypes;
+<<<<<<< HEAD
 import framework.model.Account;
 import framework.model.IAccountFactory;
 import framework.model.ICompany;
+=======
+import framework.control.command.Withdraw;
+import framework.model.Account;
+>>>>>>> FETCH_HEAD
 import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
 import framework.model.IPersonal;
@@ -18,6 +24,8 @@ public class BankController implements IController {
 
 	private IFrame jframe;
 	private ICustomer cust;
+	private TransactionManager tm;
+	private Account acct;
 
 	@Override
 	public IFrame getFrame() {
@@ -33,24 +41,37 @@ public class BankController implements IController {
 
 	}
 
-	public void addPersonalCustomer(String[] row) {
-		// create the person
-		// cust = Fac.createCustomer();
-	}
-
 	@Override
-	public void transact(TransactionTypes type, Double value) {
-		switch (type) {
-		case ADD_INTEREST:
-			break;
-		case WITHDRAW:
-			break;
-		default:
-			break;
+	public void transact(TransactionTypes type, String acctNumber, Double value) {
+		acct = cust.getAccount(acctNumber);
+		if (acct != null) {
+			switch (type) {
+			case ADD_INTEREST:
+//				tm.exeuteTransaction(new AddInterest(value));
+				break;
+			case WITHDRAW:
+				value = -value;
+				tm.exeuteTransaction(new Withdraw(acct, value));
+				break;
+			case DEPOSIT:
+				tm.exeuteTransaction(new Deposit(acct, value));
+				break;
+			default:
+				
+				break;
+			}
 		}
 
 	}
 
+
+	@Override
+	public void addCustomer(String[] details) {
+		// TODO Auto-generated method stub
+
+	}
+
+<<<<<<< HEAD
     @Override
     public ICustomerFactory getCustomerFactory() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -165,5 +186,7 @@ public class BankController implements IController {
     public String getTimeStamp() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+=======
+>>>>>>> FETCH_HEAD
 
 }

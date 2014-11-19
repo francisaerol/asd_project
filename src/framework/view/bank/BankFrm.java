@@ -17,7 +17,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	 * init variables in the object
 	 ****/
 	String accountnr, clientName, street, city, zip, state, email, accountType,
-			clientType, amountDeposit, birthDate;
+			clientType, amountDeposit, birthDate, noOfEmp;
 	boolean newaccount;
 	private DefaultTableModel model;
 	private JTable JTable1;
@@ -47,12 +47,17 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JTable1 = new JTable(model);
 		model.addColumn("AccountNr");
 		model.addColumn("Name");
+		model.addColumn("Street");
+		model.addColumn("State");
+		model.addColumn("Zip");
 		model.addColumn("City");
+		model.addColumn("BirthDate");
+		model.addColumn("Email");
 		model.addColumn("P/C");
 		model.addColumn("Ch/S");
 		model.addColumn("Amount");
-		model.addColumn("Email");
-		model.addColumn("BirthDate");
+		
+		
 		rowdata = new Object[8];
 		newaccount = false;
 
@@ -202,12 +207,17 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			// add row to table
 			rowdata[0] = accountnr;
 			rowdata[1] = clientName;
-			rowdata[2] = city;
-			rowdata[3] = "P";
-			rowdata[4] = accountType;
-			rowdata[5] = "0";
-			rowdata[6] = email;
-			rowdata[7] = birthDate;
+			rowdata[2] = street;
+			rowdata[3] = city;
+			rowdata[4] = state;
+			rowdata[5] = zip;
+			rowdata[6] = birthDate;
+			rowdata[7] = email;
+			rowdata[8] = "P";
+			rowdata[9] = accountType;
+			rowdata[10] = "0";
+			
+			
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
@@ -230,12 +240,16 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			// add row to table
 			rowdata[0] = accountnr;
 			rowdata[1] = clientName;
-			rowdata[2] = city;
-			rowdata[3] = "C";
-			rowdata[4] = accountType;
-			rowdata[5] = "0";
-			rowdata[6] = email;
-			rowdata[7] = birthDate;
+			rowdata[2] = street;
+			rowdata[3] = city;
+			rowdata[4] = state;
+			rowdata[5] = zip;
+			rowdata[6] = noOfEmp;
+			rowdata[7] = email;
+			rowdata[8] = "P";
+			rowdata[9] = accountType;
+			rowdata[10] = "0";
+			
 			model.addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			newaccount = false;

@@ -31,5 +31,9 @@ public class AccountManager {
 		id++;
 		return String.valueOf(id);
 	}
+	
+	public void addInterest(){
+	
+	}
 
 }

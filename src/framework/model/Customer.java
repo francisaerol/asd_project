@@ -7,6 +7,7 @@
 package framework.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Customer implements ICustomer {
@@ -45,5 +46,17 @@ public class Customer implements ICustomer {
 	@Override
 	public void addAccount(Account acct) {
 		acctList.add(acct);
+	}
+
+	@Override
+	public Account getAccount(String acctNumber) {
+		Iterator<Account> accIter = acctList.iterator();
+		while (accIter.hasNext()) {
+			Account a = accIter.next();
+			if (a.getId() == acctNumber) {
+				return a;
+			}
+		}
+		return null;
 	}
 }

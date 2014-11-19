@@ -1,21 +1,14 @@
 package framework.control;
 
 import framework.control.command.TransactionTypes;
-import framework.model.Account;
-import framework.model.IAccountFactory;
-import framework.model.ICompany;
-import framework.model.ICustomer;
-import framework.model.ICustomerFactory;
-import framework.model.IPersonal;
 import framework.view.bank.IFrame;
-import java.util.Date;
-import java.util.List;
 
 public interface IController {
 
 	public IFrame getFrame();
 
 	public void setIFrame(IFrame i);
+<<<<<<< HEAD
 	public void transact(TransactionTypes type, Double value);
         
         public ICustomerFactory getCustomerFactory();
@@ -52,4 +45,11 @@ public interface IController {
         
         
         
+=======
+
+	public void addCustomer(String[] details);
+
+	void transact(TransactionTypes type, String acctNumber, Double value);
+
+>>>>>>> FETCH_HEAD
 }
