@@ -4,16 +4,19 @@ import framework.model.Account;
 import framework.model.ICustomer;
 
 public class Bronze extends Account {
+	private Double minimumPayment = 14.0;
 
 	public Bronze(Double balance, Double interest, ICustomer customer) {
-		super(balance, interest, customer);
-		// TODO Auto-generated constructor stub
+		super(balance, 10.0, customer);
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		Double newInterest = (Double) super.getAccountManager().getElement();
+		super.setInterest(super.getInterest() + newInterest);
 	}
 
+	public Double getMinimumPayment() {
+		return minimumPayment;
+	}
 }

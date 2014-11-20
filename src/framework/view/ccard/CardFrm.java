@@ -32,6 +32,7 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 	CardFrm thisframe;
 	private Object rowdata[];
 	private IController cardController;
+	public String interest;
 
 	public CardFrm() {
 		thisframe = this;
@@ -104,6 +105,7 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 		JButton_Deposit.addActionListener(lSymAction);
 		JButton_Withdraw.addActionListener(lSymAction);
 		jCheckBox1.addActionListener(lSymAction);
+		JButton_Addinterest.addActionListener(lSymAction);
 
 	}
 
@@ -171,11 +173,19 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 				JButtonDeposit_actionPerformed(event);
 			else if (object == JButton_Withdraw)
 				JButtonWithdraw_actionPerformed(event);
+			else if (object == JButton_Addinterest)
+				JButtonAddinterest_actionPerformed(event);
 			else if (object == jCheckBox1) {
 				jCheckBox1_actionPerformed(event);
 			}
 
 		}
+	}
+
+	void JButtonAddinterest_actionPerformed(ActionEvent evt) {
+		JDialog_AddCCInterest pac = new JDialog_AddCCInterest(thisframe);
+		pac.setBounds(430, 15, 200, 200);
+		pac.setVisible(true);
 	}
 
 	// When the Exit button is pressed this code gets executed
@@ -338,6 +348,13 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 			}
 		}
 
+	}
+
+	void addInterest() {
+		if (interest != null) {
+			cardController.transact(TransactionTypes.ADD_INTEREST, null,
+					Double.parseDouble(interest));
+		}
 	}
 
 	@Override

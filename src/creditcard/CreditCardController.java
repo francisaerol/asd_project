@@ -3,11 +3,11 @@ package creditcard;
 import java.awt.Component;
 
 import javax.swing.UIManager;
-import javax.swing.text.html.MinimalHTMLWriter;
 
 import creditcard.accounts.CreditCardAccountFactory;
 import creditcard.accounts.CreditCardFactoryMaker;
 import framework.control.IController;
+import framework.control.command.AddInterest;
 import framework.control.command.TransactionManager;
 import framework.control.command.TransactionTypes;
 import framework.manager.AccountManager;
@@ -86,6 +86,10 @@ public class CreditCardController implements IController {
 			acct = acccountManager.getAccount(acctNumber);
 			acct.addNewEntry(value);
 			break;
+		case ADD_INTEREST:
+			tm.exeuteTransaction(new AddInterest(value));
+			message.info((Component) this.mainFrame, value
+					+ "% has been added to all accounts");
 		case GENERATE_REPORT:
 			break;
 		default:

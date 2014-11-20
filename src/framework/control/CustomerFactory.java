@@ -10,7 +10,6 @@ import java.util.Date;
 
 import framework.model.Company;
 import framework.model.Customer;
-import framework.model.ICustomer;
 import framework.model.ICustomerFactory;
 import framework.model.PersonalCustomer;
 
