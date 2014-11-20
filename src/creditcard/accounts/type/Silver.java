@@ -7,7 +7,6 @@ public class Silver extends Account {
 
 	public Silver(Double balance, Double interest, ICustomer customer) {
 		super(balance, interest, customer);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

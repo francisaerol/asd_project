@@ -204,7 +204,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 
 	void jCheckBox1_actionPerformed(ActionEvent evt) {
 		isExisting = jCheckBox1.isSelected();
-		System.out.println(isExisting);
 	}
 
 	void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {

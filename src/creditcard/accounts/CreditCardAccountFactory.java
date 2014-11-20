@@ -8,23 +8,29 @@ import framework.model.IAccountFactory;
 import framework.model.ICustomer;
 
 public class CreditCardAccountFactory implements IAccountFactory {
-	private ICustomer iCustomer;
+	private ICustomer customer;
 
 	@Override
 	public void setAccountCustomer(ICustomer customer) {
-		this.iCustomer = customer;
+		this.customer = customer;
 	}
 
 	public Gold createGoldAccout(Double balance, Double interest) {
-		return new Gold(balance, interest, iCustomer);
+		Gold g = new Gold(balance, interest, customer);
+		customer.addAccount(g);
+		return g;
 	}
 
 	public Silver createSilverAccount(Double balance, Double interest) {
-		return new Silver(balance, interest, iCustomer);
+		Silver s = new Silver(balance, interest, customer);
+		customer.addAccount(s);
+		return s;
 	}
 
 	public Bronze createBronzeAccount(Double balance, Double interest) {
-		return new Bronze(balance, interest, iCustomer);
+		Bronze b = new Bronze(balance, interest, customer);
+		customer.addAccount(b);
+		return b;
 	}
 
 }

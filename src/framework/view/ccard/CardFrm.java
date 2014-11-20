@@ -1,6 +1,7 @@
 package framework.view.ccard;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.Arrays;
 
 import javax.swing.table.DefaultTableModel;
@@ -69,6 +70,10 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 		JScrollPane1.setBounds(12, 92, 444, 160);
 		JScrollPane1.getViewport().add(JTable1);
 		JTable1.setBounds(0, 0, 420, 0);
+
+		jCheckBox1.setText("Existing Customer");
+		jCheckBox1.setBounds(24, 65, 190, 20);
+		JPanel1.add(jCheckBox1);
 		// rowdata = new Object[8];
 
 		JButton_NewCCAccount.setText("Add Credit-card account");
@@ -98,6 +103,7 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 		JButton_GenBill.addActionListener(lSymAction);
 		JButton_Deposit.addActionListener(lSymAction);
 		JButton_Withdraw.addActionListener(lSymAction);
+		jCheckBox1.addActionListener(lSymAction);
 
 	}
 
@@ -112,6 +118,8 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 	javax.swing.JButton JButton_Deposit = new javax.swing.JButton();
 	javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
 	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
+	JCheckBox jCheckBox1 = new javax.swing.JCheckBox();
+	javax.swing.JButton JButton_Addinterest = new javax.swing.JButton();
 
 	void exitApplication() {
 		try {
@@ -128,6 +136,13 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 			if (object == CardFrm.this)
 				BankFrm_windowClosing(event);
 		}
+	}
+
+	boolean isExisting = false;
+
+	void jCheckBox1_actionPerformed(ActionEvent evt) {
+		isExisting = jCheckBox1.isSelected();
+		System.out.println("but" + isExisting);
 	}
 
 	void BankFrm_windowClosing(java.awt.event.WindowEvent event) {
@@ -156,6 +171,9 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 				JButtonDeposit_actionPerformed(event);
 			else if (object == JButton_Withdraw)
 				JButtonWithdraw_actionPerformed(event);
+			else if (object == jCheckBox1) {
+				jCheckBox1_actionPerformed(event);
+			}
 
 		}
 	}
@@ -172,36 +190,93 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 		 * construct a JDialog_AddPAcc type object set the boundaries and show
 		 * it
 		 */
+		System.out.println("isExisting " + isExisting);
+		if (isExisting) {
 
-		JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
-		ccac.setBounds(450, 20, 300, 380);
-		ccac.setVisible(true);
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			JDialog_AddCCAccount exist = new JDialog_AddCCAccount(thisframe);
+			exist.setBounds(450, 20, 300, 380);
 
-		if (newaccount) {
-			// add row to table
+			exist.JTextField_NAME.setText(String.valueOf(model.getValueAt(
+					selection, 1)));
+			exist.JTextField_NAME.setEditable(false);
+			exist.JTextField_STR.setText(String.valueOf(model.getValueAt(
+					selection, 2)));
+			exist.JTextField_STR.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_ST.setText(String.valueOf(model.getValueAt(
+					selection, 4)));
+			exist.JTextField_ST.setEditable(false);
+			exist.JTextField_ZIP.setText(String.valueOf(model.getValueAt(
+					selection, 5)));
+			exist.JTextField_ZIP.setEditable(false);
+			exist.JTextField_Email.setText(String.valueOf(model.getValueAt(
+					selection, 6)));
+			exist.JTextField_Email.setEditable(false);
+			exist.JTextField_CCNR.setText(String.valueOf(model.getValueAt(
+					selection, 7)));
+			exist.JTextField_CCNR.setEditable(false);
+			exist.JTextField_ExpDate.setText(String.valueOf(model.getValueAt(
+					selection, 8)));
+			exist.JTextField_ExpDate.setEditable(false);
 
-			rowdata[0] = "";
-			rowdata[1] = clientName;
-			rowdata[2] = street;
-			rowdata[3] = city;
-			rowdata[4] = state;
-			rowdata[5] = zip;
-			rowdata[6] = email;
-			rowdata[7] = ccnumber;
-			rowdata[8] = expdate;
-			rowdata[9] = accountType;
-			rowdata[10] = "0";
+			exist.setVisible(true);
 
-			String[] stringArray = Arrays.copyOf(rowdata, rowdata.length,
-					String[].class);
-			cardController.addCustomer(stringArray);
-			rowdata[0] = cardController.getAcctNo();
+			if (newaccount) {
+				rowdata[0] = "";
+				rowdata[1] = clientName;
+				rowdata[2] = street;
+				rowdata[3] = city;
+				rowdata[4] = state;
+				rowdata[5] = zip;
+				rowdata[6] = email;
+				rowdata[7] = ccnumber;
+				rowdata[8] = expdate;
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
 
-			model.addRow(rowdata);
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			newaccount = false;
+				cardController.addNewAccount(model.getValueAt(selection, 0)
+						.toString(), accountType);
+				rowdata[0] = cardController.getAcctNo();
+				model.addRow(rowdata);
+
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			}
+		} else {
+
+			JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
+			ccac.setBounds(450, 20, 300, 380);
+			ccac.setVisible(true);
+			if (newaccount) {
+				// add row to table
+
+				rowdata[0] = "";
+				rowdata[1] = clientName;
+				rowdata[2] = street;
+				rowdata[3] = city;
+				rowdata[4] = state;
+				rowdata[5] = zip;
+				rowdata[6] = email;
+				rowdata[7] = ccnumber;
+				rowdata[8] = expdate;
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
+
+				String[] stringArray = Arrays.copyOf(rowdata, rowdata.length,
+						String[].class);
+				cardController.addCustomer(stringArray);
+				rowdata[0] = cardController.getAcctNo();
+
+				model.addRow(rowdata);
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			}
 		}
-
+		newaccount = false;
 	}
 
 	void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {

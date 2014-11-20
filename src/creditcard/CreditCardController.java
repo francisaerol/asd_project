@@ -41,6 +41,7 @@ public class CreditCardController implements IController {
 	void init() {
 		tm = new TransactionManager();
 		customerFactory = CreditCardFactoryMaker.getCustomerFactory();
+	
 		creditCardAccountFactory = CreditCardFactoryMaker
 				.getCreditCardFactory();
 		message = new Message();
@@ -71,19 +72,23 @@ public class CreditCardController implements IController {
 
 	@Override
 	public void transact(TransactionTypes type, String acctNumber, Double value) {
-		switch(type){
+		switch (type) {
 		case CHARGE_ACCOUNT:
 			acct = acccountManager.getAccount(acctNumber);
-			if(value > 400) {
-				message.info((Component) mainFrame, "Email for high charging: "+value+" has been sent");	
+			if (value > 400) {
+				message.info((Component) mainFrame, "Email for high charging: "
+						+ value + " has been sent");
 			}
 			acct.addNewEntry(-value);
 			break;
 		case DEPOSIT:
+			acccountManager = AccountManager.getInstance();
 			acct = acccountManager.getAccount(acctNumber);
 			acct.addNewEntry(value);
 			break;
 		case GENERATE_REPORT:
+			break;
+		default:
 			break;
 		}
 
@@ -92,53 +97,57 @@ public class CreditCardController implements IController {
 	@Override
 	public void addCustomer(String[] rowdata) {
 		
-//		rowdata[0] = "";
-//		rowdata[1] = clientName;
-//		rowdata[2] = street;
-//		rowdata[3] = city;
-//		rowdata[4] = state;
-//		rowdata[5] = zip;
-//		rowdata[6] = email;
-//		rowdata[7] = expdate;
-//		rowdata[8] = accountType;
-//		rowdata[9] = "0";
-		customer = customerFactory.createPersonalCustomer(rowdata[1], rowdata[6]);
-		System.out.println(customer);
+		customer = customerFactory.createPersonalCustomer(rowdata[1],
+				rowdata[6]);
+	
 		customer.addAddress(rowdata[2], rowdata[3], rowdata[4], rowdata[5]);
-		String type = rowdata[8];
-		if(type.equalsIgnoreCase("Silver")){
-			acct = creditCardAccountFactory.createSilverAccount(0.0, 0.08); 
-		} else if(type.equalsIgnoreCase("Gold")) {
+		String type = rowdata[9];
+
+		creditCardAccountFactory.setAccountCustomer(customer);
+		if (type.equalsIgnoreCase("Silver")) {
+			acct = creditCardAccountFactory.createSilverAccount(0.0, 0.08);
+		} else if (type.equalsIgnoreCase("Gold")) {
 			acct = creditCardAccountFactory.createGoldAccout(0.0, 0.1);
-		} else if(type.equalsIgnoreCase("Bronze")) {
+		} else if (type.equalsIgnoreCase("Bronze")) {
 			acct = creditCardAccountFactory.createBronzeAccount(0.0, 0.06);
 		}
-		
+		acccountManager.addAccount(acct);
 
 	}
 
 	@Override
 	public String getAcctNo() {
-		// TODO Auto-generated method stub
-		return null;
+		return acct.getId();
 	}
 
 	@Override
 	public Double getBalance() {
-		// TODO Auto-generated method stub
-		return null;
+		return acct.getBalance();
 	}
 
 	@Override
 	public String getReportName() {
-		// TODO Auto-generated method stub
-		return null;
+		return reportName;
 	}
 
 	@Override
 	public String getReport() {
-		// TODO Auto-generated method stub
-		return null;
+		return report;
 	}
 
+	@Override
+	public void addNewAccount(String acnr, String accounType) {
+		Account oldAccount = acccountManager.getAccount(acnr);
+		ICustomer customer = oldAccount.getCustomer();
+		creditCardAccountFactory.setAccountCustomer(customer);
+		if (accounType.equalsIgnoreCase("Silver")) {
+			acct = creditCardAccountFactory.createSilverAccount(0.0, 0.08);
+		} else if (accounType.equalsIgnoreCase("Gold")) {
+			acct = creditCardAccountFactory.createGoldAccout(0.0, 0.1);
+		} else if (accounType.equalsIgnoreCase("Bronze")) {
+			acct = creditCardAccountFactory.createBronzeAccount(0.0, 0.06);
+		}
+		acccountManager.addAccount(acct);
+		
+	}
 }
