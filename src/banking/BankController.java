@@ -82,6 +82,8 @@ public class BankController implements IController {
 			switch (type) {
 			case ADD_INTEREST:
 				tm.exeuteTransaction(new AddInterest(value));
+				message.info((Component) this.jframe, value
+						+ "% has been added to all accounts");
 				break;
 			case WITHDRAW:
 				acct = cust.getAccount(acctNumber);
@@ -91,7 +93,7 @@ public class BankController implements IController {
 			case DEPOSIT:
 				acct = cust.getAccount(acctNumber);
 				tm.exeuteTransaction(new Deposit(acct, value));
-				if (acct.getCustomerFlag() == "P") {
+				if (acct.getCustomerFlag() == "P" & value >= 400) {
 					message.info((Component) this.jframe,
 							"An email has been sent to"
 									+ acct.getCustomer().getEmail());
@@ -116,7 +118,7 @@ public class BankController implements IController {
 		 * 1 - name 2 - st 3 - city 4 - state 5 - zip 6 - birthdate /
 		 * noOfEmployess 7 - email 8 - P or C 9 - S or Ch 10 - amount
 		 */
-
+		System.out.println(details[8]);
 		if (details[8] == "P") {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 			Date bdate = null;
@@ -176,6 +178,5 @@ public class BankController implements IController {
 		}
 		acccountManager.addAccount(acct);
 	}
-
 
 }

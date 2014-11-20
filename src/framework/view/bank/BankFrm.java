@@ -263,58 +263,60 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			exist.JTextField_EM.setEditable(false);
 
 			exist.setVisible(true);
+			if (newaccount) {
+				rowdata[1] = model.getValueAt(selection, 1);
+				rowdata[2] = model.getValueAt(selection, 2);
+				rowdata[3] = model.getValueAt(selection, 3);
+				rowdata[4] = model.getValueAt(selection, 4);
+				rowdata[5] = model.getValueAt(selection, 5);
+				rowdata[6] = model.getValueAt(selection, 6);
+				rowdata[7] = model.getValueAt(selection, 7);
+				rowdata[8] = "P";
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
 
-			rowdata[1] = model.getValueAt(selection, 1);
-			rowdata[2] = model.getValueAt(selection, 2);
-			rowdata[3] = model.getValueAt(selection, 3);
-			rowdata[4] = model.getValueAt(selection, 4);
-			rowdata[5] = model.getValueAt(selection, 5);
-			rowdata[6] = model.getValueAt(selection, 6);
-			rowdata[7] = model.getValueAt(selection, 7);
-			rowdata[8] = "P";
-			rowdata[9] = accountType;
-			rowdata[10] = "0";
+				control.addNewAccount(
+						model.getValueAt(selection, 0).toString(), accountType);
+				rowdata[0] = control.getAcctNo();
+				model.addRow(rowdata);
 
-			control.addNewAccount(model.getValueAt(selection, 0).toString(),
-					accountType);
-			rowdata[0] = control.getAcctNo();
-			model.addRow(rowdata);
-
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			}
 
 		} else {
 			JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
 			pac.setBounds(450, 20, 300, 330);
 			pac.setVisible(true);
-			// add row to table
-			rowdata[0] = accountnr;
-			rowdata[1] = clientName;
-			rowdata[2] = street;
-			rowdata[3] = city;
-			rowdata[4] = state;
-			rowdata[5] = zip;
-			rowdata[6] = birthDate;
-			rowdata[7] = email;
-			rowdata[8] = "P";
-			rowdata[9] = accountType;
-			rowdata[10] = "0";
+			if (newaccount) {
+				rowdata[0] = accountnr;
+				rowdata[1] = clientName;
+				rowdata[2] = street;
+				rowdata[3] = city;
+				rowdata[4] = state;
+				rowdata[5] = zip;
+				rowdata[6] = birthDate;
+				rowdata[7] = email;
+				rowdata[8] = "P";
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
 
-			// System.out.println(control);
-			String[] newArr = new String[15];
-			int x = 0;
-			for (Object o : rowdata) {
-				if (o != null) {
-					newArr[x] = o.toString();
-				} else {
-					newArr[x] = "";
+				// System.out.println(control);
+				String[] newArr = new String[15];
+				int x = 0;
+				for (Object o : rowdata) {
+					if (o != null) {
+						newArr[x] = o.toString();
+					} else {
+						newArr[x] = "";
+					}
+					x++;
 				}
-				x++;
-			}
-			control.addCustomer(newArr);
-			rowdata[0] = control.getAcctNo();
-			model.addRow(rowdata);
+				control.addCustomer(newArr);
+				rowdata[0] = control.getAcctNo();
+				model.addRow(rowdata);
 
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			}
 		}
 		newaccount = false;
 
@@ -325,43 +327,95 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		 * construct a JDialog_AddCompAcc type object set the boundaries and
 		 * show it
 		 */
+		if (isExisting) {
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 
-		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
-		pac.setBounds(450, 20, 300, 330);
-		pac.setVisible(true);
+			JDialog_AddCompAcc exist = new JDialog_AddCompAcc(myframe);
+			exist.setBounds(450, 20, 300, 330);
+			exist.JTextField_NAME.setText(String.valueOf(model.getValueAt(
+					selection, 1)));
+			exist.JTextField_NAME.setEditable(false);
+			exist.JTextField_STR.setText(String.valueOf(model.getValueAt(
+					selection, 2)));
+			exist.JTextField_STR.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_ST.setText(String.valueOf(model.getValueAt(
+					selection, 4)));
+			exist.JTextField_ST.setEditable(false);
+			exist.JTextField_ZIP.setText(String.valueOf(model.getValueAt(
+					selection, 5)));
+			exist.JTextField_ZIP.setEditable(false);
+			exist.JTextField_NoOfEmp.setText(String.valueOf(model.getValueAt(
+					selection, 6)));
+			exist.JTextField_NoOfEmp.setEditable(false);
+			exist.JTextField_EM.setText(String.valueOf(model.getValueAt(
+					selection, 7)));
+			exist.JTextField_EM.setEditable(false);
 
-		if (newaccount) {
-			// add row to table
-			rowdata[0] = accountnr;
-			rowdata[1] = clientName;
-			rowdata[2] = street;
-			rowdata[3] = city;
-			rowdata[4] = state;
-			rowdata[5] = zip;
-			rowdata[6] = noOfEmp;
-			rowdata[7] = email;
-			rowdata[8] = "C";
-			rowdata[9] = accountType;
-			rowdata[10] = "0";
+			exist.setVisible(true);
+			if (newaccount) {
+				rowdata[1] = model.getValueAt(selection, 1);
+				rowdata[2] = model.getValueAt(selection, 2);
+				rowdata[3] = model.getValueAt(selection, 3);
+				rowdata[4] = model.getValueAt(selection, 4);
+				rowdata[5] = model.getValueAt(selection, 5);
+				rowdata[6] = model.getValueAt(selection, 6);
+				rowdata[7] = model.getValueAt(selection, 7);
+				rowdata[8] = "C";
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
 
-			String[] newArr = new String[11];
-			int x = 0;
-			for (Object o : rowdata) {
-				if (o != null) {
-					newArr[x] = o.toString();
-				} else {
-					newArr[x] = "";
-				}
-				x++;
+				control.addNewAccount(
+						model.getValueAt(selection, 0).toString(), accountType);
+				rowdata[0] = control.getAcctNo();
+				model.addRow(rowdata);
+
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			}
-			control.addCustomer(newArr);
-			rowdata[0] = control.getAcctNo();
-			model.addRow(rowdata);
 
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			newaccount = false;
+		} else {
+			JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
+			pac.setBounds(450, 20, 300, 330);
+			pac.setVisible(true);
+			// add row to table
+			if (newaccount) {
+				rowdata[0] = accountnr;
+				rowdata[1] = clientName;
+				rowdata[2] = street;
+				rowdata[3] = city;
+				rowdata[4] = state;
+				rowdata[5] = zip;
+				rowdata[6] = noOfEmp;
+				rowdata[7] = email;
+				rowdata[8] = "C";
+				rowdata[9] = accountType;
+				rowdata[10] = "0";
+
+				// System.out.println(control);
+				String[] newArr = new String[15];
+				int x = 0;
+				for (Object o : rowdata) {
+					if (o != null) {
+						newArr[x] = o.toString();
+					} else {
+						newArr[x] = "";
+					}
+					x++;
+				}
+				control.addCustomer(newArr);
+				rowdata[0] = control.getAcctNo();
+				model.addRow(rowdata);
+
+				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			}
+
 		}
-
+		newaccount = false;
 	}
 
 	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event) {
@@ -398,7 +452,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 
 			// compute new amount
 			Double wdraw = Double.parseDouble(amountDeposit);
-			control.transact(TransactionTypes.DEPOSIT, accnr, wdraw);
+			control.transact(TransactionTypes.WITHDRAW, accnr, wdraw);
 			model.setValueAt(String.valueOf(control.getBalance()), selection,
 					10);
 			if (control.getBalance() < 0) {
@@ -412,20 +466,17 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 
 	}
 
-	boolean interestFlag = false;
+	void addInterest() {
+		if (interest != null) {
+			control.transact(TransactionTypes.ADD_INTEREST, null,
+					Double.parseDouble(interest));
+		}
+	}
 
 	void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event) {
 		JDialog_AddInterest pac = new JDialog_AddInterest(myframe);
 		pac.setBounds(430, 15, 200, 200);
 		pac.setVisible(true);
-		if (interestFlag) {
-			if (interest != null) {
-				control.transact(TransactionTypes.ADD_INTEREST, null,
-						Double.parseDouble(interest));
-				msg.info(myframe,
-						"Interest has now been applied to all accounts");
-			}
-		}
 
 	}
 

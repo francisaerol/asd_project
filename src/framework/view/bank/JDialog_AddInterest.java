@@ -3,12 +3,15 @@ package framework.view.bank;
 import javax.swing.JDialog;
 
 public class JDialog_AddInterest extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5555322106933254149L;
 	private BankFrm parentframe;
 
 	public JDialog_AddInterest(BankFrm parent) {
 		super(parent);
 		parentframe = parent;
-
 		jLabel1 = new javax.swing.JLabel();
 		JText_Interest = new javax.swing.JTextField();
 		JButton_OK = new javax.swing.JButton();
@@ -73,9 +76,9 @@ public class JDialog_AddInterest extends JDialog {
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();
-			if (object == JButton_OK)
+			if (object == JButton_OK) {
 				JButtonOK_actionPerformed(event);
-
+			}
 		}
 	}
 
@@ -85,7 +88,7 @@ public class JDialog_AddInterest extends JDialog {
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
 		parentframe.interest = JText_Interest.getText();
-		parentframe.interestFlag = true;
+		parentframe.addInterest();
 		dispose();
 
 	}
