@@ -1,7 +1,9 @@
 package framework.view.bank;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -51,6 +53,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		 * /Add five buttons on the pane /for Adding personal account, Adding
 		 * company account /Deposit, Withdraw and Exit from the system
 		 */
+
 		JScrollPane1 = new JScrollPane();
 		model = new DefaultTableModel();
 		JTable1 = new JTable(model);
@@ -82,6 +85,10 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JButton_CompAC.setText("Add company account");
 		JButton_CompAC.setActionCommand("jbutton");
 		JPanel1.add(JButton_CompAC);
+		jCheckBox1.setText("Existing Customer");
+		jCheckBox1.setBounds(24, 65, 190, 20);
+
+		JPanel1.add(jCheckBox1);
 
 		JButton_CompAC.setBounds(240, 20, 192, 33);
 
@@ -100,6 +107,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JPanel1.add(JButton_Addinterest);
 
 		JButton_Withdraw.setBounds(468, 155, 96, 33);
+
 		JButton_Exit.setText("Exit");
 		JPanel1.add(JButton_Exit);
 		JButton_Exit.setBounds(468, 248, 96, 31);
@@ -119,6 +127,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JButton_Withdraw.addActionListener(lSymAction);
 		JButton_Addinterest.addActionListener(lSymAction);
 		JButton_GenerateBill.addActionListener(lSymAction);
+		jCheckBox1.addActionListener(lSymAction);
 
 	}
 
@@ -135,6 +144,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	javax.swing.JButton JButton_Addinterest = new javax.swing.JButton();
 	javax.swing.JButton JButton_GenerateBill = new javax.swing.JButton();
 	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
+	JCheckBox jCheckBox1 = new javax.swing.JCheckBox();
 
 	void exitApplication() {
 		try {
@@ -185,9 +195,16 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 				JButtonAddinterest_actionPerformed(event);
 			else if (object == JButton_GenerateBill) {
 				JButtonGenerateBill_actionPerformed(event);
+			} else if (object == jCheckBox1) {
+				jCheckBox1_actionPerformed(event);
 			}
 
 		}
+	}
+
+	void jCheckBox1_actionPerformed(ActionEvent evt) {
+		isExisting = jCheckBox1.isSelected();
+		System.out.println(isExisting);
 	}
 
 	void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {
@@ -204,6 +221,8 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		System.exit(0);
 	}
 
+	boolean isExisting = false;
+
 	void JButtonPerAC_actionPerformed(java.awt.event.ActionEvent event) {
 		/*
 		 * JDialog_AddPAcc type object is for adding personal information
@@ -211,11 +230,62 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		 * it
 		 */
 
-		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
-		pac.setBounds(450, 20, 300, 330);
-		pac.setVisible(true);
+		System.out.println("isexisting: " + isExisting);
 
-		if (newaccount) {
+		if (isExisting) {
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+
+			JDialog_AddPAcc exist = new JDialog_AddPAcc(myframe);
+			exist.setBounds(450, 20, 300, 330);
+			exist.JTextField_NAME.setText(String.valueOf(model.getValueAt(
+					selection, 1)));
+			exist.JTextField_NAME.setEditable(false);
+			exist.JTextField_STR.setText(String.valueOf(model.getValueAt(
+					selection, 2)));
+			exist.JTextField_STR.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_CT.setText(String.valueOf(model.getValueAt(
+					selection, 3)));
+			exist.JTextField_CT.setEditable(false);
+			exist.JTextField_ST.setText(String.valueOf(model.getValueAt(
+					selection, 4)));
+			exist.JTextField_ST.setEditable(false);
+			exist.JTextField_ZIP.setText(String.valueOf(model.getValueAt(
+					selection, 5)));
+			exist.JTextField_ZIP.setEditable(false);
+			exist.JTextField_BD.setText(String.valueOf(model.getValueAt(
+					selection, 6)));
+			exist.JTextField_BD.setEditable(false);
+			exist.JTextField_EM.setText(String.valueOf(model.getValueAt(
+					selection, 7)));
+			exist.JTextField_EM.setEditable(false);
+
+			exist.setVisible(true);
+
+			rowdata[1] = model.getValueAt(selection, 1);
+			rowdata[2] = model.getValueAt(selection, 2);
+			rowdata[3] = model.getValueAt(selection, 3);
+			rowdata[4] = model.getValueAt(selection, 4);
+			rowdata[5] = model.getValueAt(selection, 5);
+			rowdata[6] = model.getValueAt(selection, 6);
+			rowdata[7] = model.getValueAt(selection, 7);
+			rowdata[8] = "P";
+			rowdata[9] = accountType;
+			rowdata[10] = "0";
+
+			control.addNewAccount(model.getValueAt(selection, 0).toString(),
+					accountType);
+			rowdata[0] = control.getAcctNo();
+			model.addRow(rowdata);
+
+			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+
+		} else {
+			JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
+			pac.setBounds(450, 20, 300, 330);
+			pac.setVisible(true);
 			// add row to table
 			rowdata[0] = accountnr;
 			rowdata[1] = clientName;
@@ -245,8 +315,8 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			model.addRow(rowdata);
 
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			newaccount = false;
 		}
+		newaccount = false;
 
 	}
 

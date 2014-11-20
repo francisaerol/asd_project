@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
 import framework.control.IController;
+import framework.control.command.TransactionTypes;
 import framework.view.IFrame;
 import framework.view.JDialog_Report;
 
@@ -178,6 +179,7 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 
 		if (newaccount) {
 			// add row to table
+
 			rowdata[0] = "";
 			rowdata[1] = clientName;
 			rowdata[2] = street;
@@ -185,13 +187,15 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 			rowdata[4] = state;
 			rowdata[5] = zip;
 			rowdata[6] = email;
-			rowdata[7] = expdate;
-			rowdata[8] = accountType;
-			rowdata[9] = "0";
+			rowdata[7] = ccnumber;
+			rowdata[8] = expdate;
+			rowdata[9] = accountType;
+			rowdata[10] = "0";
 
 			String[] stringArray = Arrays.copyOf(rowdata, rowdata.length,
 					String[].class);
 			cardController.addCustomer(stringArray);
+			rowdata[0] = cardController.getAcctNo();
 
 			model.addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
@@ -208,23 +212,27 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 
 	}
 
+	boolean isCancel = false;
+
 	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event) {
 		// get selected name
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
-			String name = (String) model.getValueAt(selection, 0);
+			String acctNumber = (String) model.getValueAt(selection, 0);
 
 			// Show the dialog for adding deposit amount for the current mane
-			JDialog_Deposit dep = new JDialog_Deposit(thisframe, name);
+			JDialog_Deposit dep = new JDialog_Deposit(thisframe, acctNumber);
 			dep.setBounds(430, 15, 275, 140);
 			dep.setVisible(true);
+			if (isCancel) {
+				// compute new a mount
+				Double deposit = Double.parseDouble(amountDeposit);
 
-			// compute new a mount
-			long deposit = Long.parseLong(amountDeposit);
-			String samount = (String) model.getValueAt(selection, 4);
-			long currentamount = Long.parseLong(samount);
-			long newamount = currentamount + deposit;
-			model.setValueAt(String.valueOf(newamount), selection, 4);
+				cardController.transact(TransactionTypes.DEPOSIT, acctNumber,
+						deposit);
+				model.setValueAt(String.valueOf(cardController.getBalance()),
+						selection, 10);
+			}
 		}
 
 	}
@@ -233,25 +241,24 @@ public class CardFrm extends javax.swing.JFrame implements IFrame {
 		// get selected name
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
-			String name = (String) model.getValueAt(selection, 0);
+			String acctNumber = (String) model.getValueAt(selection, 0);
 
 			// Show the dialog for adding withdraw amount for the current mane
-			JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name);
+			JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, acctNumber);
 			wd.setBounds(430, 15, 275, 140);
 			wd.setVisible(true);
 
 			// compute new amount
-			long deposit = Long.parseLong(amountDeposit);
-			String samount = (String) model.getValueAt(selection, 4);
-			long currentamount = Long.parseLong(samount);
-			long newamount = currentamount - deposit;
-			model.setValueAt(String.valueOf(newamount), selection, 4);
-			if (newamount < 0) {
-				JOptionPane.showMessageDialog(
-						JButton_Withdraw,
-						" " + name + " Your balance is negative: $"
-								+ String.valueOf(newamount) + " !",
-						"Warning: negative balance",
+			Double value = Double.parseDouble(amountDeposit);
+			cardController.transact(TransactionTypes.WITHDRAW, acctNumber,
+					value);
+			model.setValueAt(String.valueOf(cardController.getBalance()),
+					selection, 4);
+			if (cardController.getBalance() < 0) {
+				JOptionPane.showMessageDialog(JButton_Withdraw,
+						" " + acctNumber + " Your balance is negative: $"
+								+ String.valueOf(cardController.getBalance())
+								+ " !", "Warning: negative balance",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}

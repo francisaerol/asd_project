@@ -26,7 +26,7 @@ public class JDialog_Deposit extends javax.swing.JDialog
 		getContentPane().setLayout(null);
 		setSize(268,126);
 		setVisible(false);
-		JLabel1.setText("Name");
+		JLabel1.setText("Id");
 		getContentPane().add(JLabel1);
 		JLabel1.setForeground(java.awt.Color.black);
 		JLabel1.setBounds(12,12,48,24);
@@ -85,11 +85,13 @@ public class JDialog_Deposit extends javax.swing.JDialog
 	{
           
         parentframe.amountDeposit=JTextField_Deposit.getText();
+        parentframe.isCancel = true;
         dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
 	{
+		
 		dispose();
 	}
 

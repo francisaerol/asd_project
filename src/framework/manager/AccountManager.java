@@ -61,7 +61,7 @@ public class AccountManager {
 		return element;
 	}
 
-	public static List<Account> getAccountList() {
+	public List<Account> getAccountList() {
 		return accountList;
 	}
 }

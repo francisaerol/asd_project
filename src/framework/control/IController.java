@@ -9,16 +9,18 @@ public interface IController {
 
 	public void setIFrame(IFrame i);
 
-	void transact(TransactionTypes type, String acctNumber, Double value);
+	public void transact(TransactionTypes type, String acctNumber, Double value);
 
-	void addCustomer(String[] row);
+	public void addCustomer(String[] row);
 
-	String getAcctNo();
+	public String getAcctNo();
 
-	Double getBalance();
+	public Double getBalance();
 
-	String getReportName();
+	public String getReportName();
 
-	String getReport();
+	public String getReport();
+
+	public void addNewAccount(String acnr, String accounType);
 
 }

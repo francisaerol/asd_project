@@ -34,11 +34,11 @@ public class BankController implements IController {
 
 	private ICustomerFactory customerFactory;
 	private BankAccountFactory bankAccountFactory;
-	private AccountManager acccountManager;
+	private AccountManager acccountManager = AccountManager.getInstance();
 
 	private Account acct;
 	private Message message;
-	
+
 	private String reportName = "";
 	private String report = "";
 
@@ -47,7 +47,6 @@ public class BankController implements IController {
 		customerFactory = FactoryMaker.getCustomerFactory();
 		bankAccountFactory = BankFactoryMaker.getBankAccountFactory();
 		message = new Message();
-		acccountManager = AccountManager.getInstance();
 	}
 
 	@Override
@@ -125,14 +124,15 @@ public class BankController implements IController {
 				bdate = formatter.parse(details[6]);
 			} catch (ParseException e) {
 				message.error((Component) this.jframe, "Wrong Birthday");
-			
+
 			}
 			cust = customerFactory.createPersonalCustomer(details[1],
 					details[7], bdate);
 			cust.addAddress(details[2], details[3], details[4], details[5]);
 
 		} else {
-			cust = customerFactory.createCompanyCustomer(details[1], details[7], Integer.parseInt(details[6]));
+			cust = customerFactory.createCompanyCustomer(details[1],
+					details[7], Integer.parseInt(details[6]));
 			cust.addAddress(details[2], details[3], details[4], details[5]);
 		}
 		bankAccountFactory.setAccountCustomer(cust);
@@ -163,5 +163,19 @@ public class BankController implements IController {
 	public String getReport() {
 		return report;
 	}
+
+	@Override
+	public void addNewAccount(String acnr, String accounType) {
+		Account oldAccount = acccountManager.getAccount(acnr);
+		ICustomer customer = oldAccount.getCustomer();
+		bankAccountFactory.setAccountCustomer(customer);
+		if (accounType == "S") {
+			acct = bankAccountFactory.createSavingsAccount(0, 0);
+		} else {
+			acct = bankAccountFactory.createCheckingAccount(0, 0);
+		}
+		acccountManager.addAccount(acct);
+	}
+
 
 }
