@@ -1,6 +1,5 @@
 package framework.model;
 
-
 public class Company extends Customer implements ICompany {
 
 	private Integer noOfEmployees;

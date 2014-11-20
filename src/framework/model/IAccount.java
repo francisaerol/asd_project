@@ -1,7 +1,5 @@
 package framework.model;
 
-import framework.manager.AccountManager;
-
 public interface IAccount {
 	public Double getBalance();
 

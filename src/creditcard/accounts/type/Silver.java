@@ -14,7 +14,6 @@ public class Silver extends Account {
 	public void update() {
 		Double newInterest = (Double) super.getAccountManager().getElement();
 		super.setInterest(super.getInterest() + newInterest);
-
 	}
 
 	public Double getMinimumPaymentPercent() {

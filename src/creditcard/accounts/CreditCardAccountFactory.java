@@ -9,7 +9,6 @@ import framework.model.ICustomer;
 
 public class CreditCardAccountFactory implements IAccountFactory {
 	private ICustomer customer;
-
 	@Override
 	public void setAccountCustomer(ICustomer customer) {
 		this.customer = customer;
@@ -32,5 +31,4 @@ public class CreditCardAccountFactory implements IAccountFactory {
 		customer.addAccount(b);
 		return b;
 	}
-
 }

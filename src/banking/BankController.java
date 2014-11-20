@@ -114,10 +114,6 @@ public class BankController implements IController {
 
 	@Override
 	public void addCustomer(String[] details) {
-		/*
-		 * 1 - name 2 - st 3 - city 4 - state 5 - zip 6 - birthdate /
-		 * noOfEmployess 7 - email 8 - P or C 9 - S or Ch 10 - amount
-		 */
 		System.out.println(details[8]);
 		if (details[8] == "P") {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");

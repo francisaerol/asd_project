@@ -8,9 +8,8 @@ public class Withdraw implements Transaction {
 	private Date timeStamp;
 	private Account acct;
 	private Double amount;
-	
-	
-	public Withdraw(Account acct,Double amt) {
+
+	public Withdraw(Account acct, Double amt) {
 		this.acct = acct;
 		this.amount = amt;
 		timeStamp = new Date();
@@ -23,8 +22,6 @@ public class Withdraw implements Transaction {
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

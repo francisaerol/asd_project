@@ -41,7 +41,6 @@ public class CreditCardController implements IController {
 	void init() {
 		tm = new TransactionManager();
 		customerFactory = CreditCardFactoryMaker.getCustomerFactory();
-	
 		creditCardAccountFactory = CreditCardFactoryMaker
 				.getCreditCardFactory();
 		message = new Message();
@@ -53,7 +52,6 @@ public class CreditCardController implements IController {
 		this.mainFrame = i;
 		this.mainFrame.setController(this);
 		init();
-
 		try {
 			try {
 				UIManager.setLookAndFeel(UIManager
@@ -64,10 +62,8 @@ public class CreditCardController implements IController {
 			this.mainFrame.setVisible(true);
 		} catch (Throwable t) {
 			t.printStackTrace();
-			// Ensure the application exits with an error condition.
 			System.exit(1);
 		}
-
 	}
 
 	@Override
@@ -100,13 +96,10 @@ public class CreditCardController implements IController {
 
 	@Override
 	public void addCustomer(String[] rowdata) {
-		
 		customer = customerFactory.createPersonalCustomer(rowdata[1],
 				rowdata[6]);
-	
 		customer.addAddress(rowdata[2], rowdata[3], rowdata[4], rowdata[5]);
 		String type = rowdata[9];
-
 		creditCardAccountFactory.setAccountCustomer(customer);
 		if (type.equalsIgnoreCase("Silver")) {
 			acct = creditCardAccountFactory.createSilverAccount(0.0, 0.08);
@@ -116,7 +109,6 @@ public class CreditCardController implements IController {
 			acct = creditCardAccountFactory.createBronzeAccount(0.0, 0.06);
 		}
 		acccountManager.addAccount(acct);
-
 	}
 
 	@Override
@@ -152,6 +144,5 @@ public class CreditCardController implements IController {
 			acct = creditCardAccountFactory.createBronzeAccount(0.0, 0.06);
 		}
 		acccountManager.addAccount(acct);
-		
 	}
 }

@@ -32,7 +32,7 @@ public class CustomerFactory implements ICustomerFactory {
 
 	@Override
 	public Customer createPersonalCustomer(String name, String email) {
-		 return new PersonalCustomer(name, email);
+		return new PersonalCustomer(name, email);
 	}
 
 }

@@ -6,14 +6,14 @@ public interface ICustomer {
 
 	public String getName();
 
+	public String getEmail();
+
 	public List<IAddress> getAddress();
 
-	public String getEmail();
+	public Account getAccount(String acctNumber);
 
 	public void addAddress(String street, String city, String state, String zip);
 
 	public void addAccount(Account acct);
-
-	public Account getAccount(String acctNumber);
 
 }

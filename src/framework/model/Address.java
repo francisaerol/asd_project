@@ -1,6 +1,5 @@
 package framework.model;
 
-
 public class Address implements IAddress {
 
 	private String street;

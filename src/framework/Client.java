@@ -12,30 +12,22 @@ public class Client {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, IOException {
-
 		Message msg = new Message();
-		String classname = args[0];
-		String system = args[1];
-		System.out.println(classname);
-
-		System.out.println(system);
 		try {
-			if (classname.length() == 0) {
+			if (args.length == 0) {
 				IController b = (IController) new Controller();
 				b.setIFrame(new BankFrm());
 			} else {
-				Class c = Class.forName(classname);
+				Class c = Class.forName(args[0]);
 				IController b = (IController) c.newInstance();
-				if (system.equalsIgnoreCase("B")) {
+				if (args[1].equalsIgnoreCase("B")) {
 					b.setIFrame(new BankFrm());
-					System.out.println(system);
 				} else {
 					b.setIFrame(new CardFrm());
-					System.out.println(system);
 				}
 			}
 		} catch (ClassNotFoundException e) {
-			msg.error(new BankFrm(), classname + "is not found!");
+			msg.error(new BankFrm(), args[0] + "is not found!");
 		}
 	}
 

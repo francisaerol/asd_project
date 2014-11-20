@@ -5,6 +5,14 @@ import framework.view.IFrame;
 
 public interface IController {
 
+	public String getAcctNo();
+
+	public String getReportName();
+
+	public String getReport();
+
+	public Double getBalance();
+
 	public IFrame getFrame();
 
 	public void setIFrame(IFrame i);
@@ -12,14 +20,6 @@ public interface IController {
 	public void transact(TransactionTypes type, String acctNumber, Double value);
 
 	public void addCustomer(String[] row);
-
-	public String getAcctNo();
-
-	public Double getBalance();
-
-	public String getReportName();
-
-	public String getReport();
 
 	public void addNewAccount(String acnr, String accounType);
 

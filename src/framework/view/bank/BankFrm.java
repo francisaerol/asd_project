@@ -2,9 +2,12 @@ package framework.view.bank;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -15,44 +18,42 @@ import framework.view.IFrame;
 import framework.view.JDialog_Report;
 import framework.view.messages.Message;
 
-/**
- * A basic JFC based application.
- */
-public class BankFrm extends javax.swing.JFrame implements IFrame {
-	/**
-	 * 
-	 */
+public class BankFrm extends JFrame implements IFrame {
+
 	private static final long serialVersionUID = 3848527839309928931L;
-	/****
-	 * init variables in the object
-	 ****/
+
 	String accountnr, clientName, street, city, zip, state, email, accountType,
 			clientType, amountDeposit, birthDate, noOfEmp, interest;
 	boolean newaccount;
 	private DefaultTableModel model;
 	private JTable JTable1;
 	private JScrollPane JScrollPane1;
-	BankFrm myframe;
+	private BankFrm myframe;
 	private Object rowdata[];
 	private Message msg = new Message();
+	boolean isExisting = false;
 
 	private IController control;
+	JPanel JPanel1 = new JPanel();
+	JButton JButton_PerAC = new JButton();
+	JButton JButton_CompAC = new JButton();
+	JButton JButton_Deposit = new JButton();
+	JButton JButton_Withdraw = new JButton();
+	JButton JButton_Addinterest = new JButton();
+	JButton JButton_GenerateBill = new JButton();
+	JButton JButton_Exit = new JButton();
+	JCheckBox jCheckBox1 = new JCheckBox();
 
 	public BankFrm() {
 		myframe = this;
-
 		setTitle("Bank Application.");
-		setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setSize(650, 350);
 		setVisible(false);
 		JPanel1.setLayout(null);
 		getContentPane().add(BorderLayout.CENTER, JPanel1);
 		JPanel1.setBounds(0, 0, 600, 500);
-		/*
-		 * /Add five buttons on the pane /for Adding personal account, Adding
-		 * company account /Deposit, Withdraw and Exit from the system
-		 */
 
 		JScrollPane1 = new JScrollPane();
 		model = new DefaultTableModel();
@@ -76,7 +77,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JScrollPane1.setBounds(12, 92, 444, 160);
 		JScrollPane1.getViewport().add(JTable1);
 		JTable1.setBounds(0, 0, 420, 0);
-		// rowdata = new Object[8];
 
 		JButton_PerAC.setText("Add personal account");
 		JPanel1.add(JButton_PerAC);
@@ -111,9 +111,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JButton_Exit.setText("Exit");
 		JPanel1.add(JButton_Exit);
 		JButton_Exit.setBounds(468, 248, 96, 31);
-		// lineBorder1.setRoundedCorners(true);
-		// lineBorder1.setLineColor(java.awt.Color.green);
-		// $$ lineBorder1.move(24,312);
 
 		JButton_PerAC.setActionCommand("jbutton");
 
@@ -130,21 +127,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		jCheckBox1.addActionListener(lSymAction);
 
 	}
-
-	/*****************************************************
-	 * The entry point for this application. Sets the Look and Feel to the
-	 * System Look and Feel. Creates a new JFrame1 and makes it visible.
-	 *****************************************************/
-
-	javax.swing.JPanel JPanel1 = new javax.swing.JPanel();
-	javax.swing.JButton JButton_PerAC = new javax.swing.JButton();
-	javax.swing.JButton JButton_CompAC = new javax.swing.JButton();
-	javax.swing.JButton JButton_Deposit = new javax.swing.JButton();
-	javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
-	javax.swing.JButton JButton_Addinterest = new javax.swing.JButton();
-	javax.swing.JButton JButton_GenerateBill = new javax.swing.JButton();
-	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
-	JCheckBox jCheckBox1 = new javax.swing.JCheckBox();
 
 	void exitApplication() {
 		try {
@@ -164,8 +146,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	void BankFrm_windowClosing(java.awt.event.WindowEvent event) {
-		// to do: code goes here.
-
 		BankFrm_windowClosing_Interaction1(event);
 	}
 
@@ -220,17 +200,7 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		System.exit(0);
 	}
 
-	boolean isExisting = false;
-
 	void JButtonPerAC_actionPerformed(java.awt.event.ActionEvent event) {
-		/*
-		 * JDialog_AddPAcc type object is for adding personal information
-		 * construct a JDialog_AddPAcc type object set the boundaries and show
-		 * it
-		 */
-
-		System.out.println("isexisting: " + isExisting);
-
 		if (isExisting) {
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 
@@ -299,17 +269,8 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 				rowdata[9] = accountType;
 				rowdata[10] = "0";
 
-				// System.out.println(control);
-				String[] newArr = new String[15];
-				int x = 0;
-				for (Object o : rowdata) {
-					if (o != null) {
-						newArr[x] = o.toString();
-					} else {
-						newArr[x] = "";
-					}
-					x++;
-				}
+				String[] newArr = Arrays.copyOf(rowdata, rowdata.length,
+						String[].class);
 				control.addCustomer(newArr);
 				rowdata[0] = control.getAcctNo();
 				model.addRow(rowdata);
@@ -318,14 +279,9 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			}
 		}
 		newaccount = false;
-
 	}
 
 	void JButtonCompAC_actionPerformed(java.awt.event.ActionEvent event) {
-		/*
-		 * construct a JDialog_AddCompAcc type object set the boundaries and
-		 * show it
-		 */
 		if (isExisting) {
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 
@@ -381,7 +337,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 			JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
 			pac.setBounds(450, 20, 300, 330);
 			pac.setVisible(true);
-			// add row to table
 			if (newaccount) {
 				rowdata[0] = accountnr;
 				rowdata[1] = clientName;
@@ -395,40 +350,26 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 				rowdata[9] = accountType;
 				rowdata[10] = "0";
 
-				// System.out.println(control);
-				String[] newArr = new String[15];
-				int x = 0;
-				for (Object o : rowdata) {
-					if (o != null) {
-						newArr[x] = o.toString();
-					} else {
-						newArr[x] = "";
-					}
-					x++;
-				}
+				String[] newArr = Arrays.copyOf(rowdata, rowdata.length,
+						String[].class);
 				control.addCustomer(newArr);
 				rowdata[0] = control.getAcctNo();
 				model.addRow(rowdata);
-
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			}
-
 		}
 		newaccount = false;
 	}
 
 	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event) {
-		// get selected name
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
 			String accnr = (String) model.getValueAt(selection, 0);
 
-			// Show the dialog for adding deposit amount for the current mane
 			JDialog_Deposit dep = new JDialog_Deposit(myframe, accnr);
 			dep.setBounds(430, 15, 275, 140);
 			dep.setVisible(true);
 
-			// compute new amount
 			Double deposit = Double.parseDouble(amountDeposit);
 			control.transact(TransactionTypes.DEPOSIT, accnr, deposit);
 			model.setValueAt(String.valueOf(control.getBalance()), selection,
@@ -439,27 +380,22 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 	}
 
 	void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event) {
-		// get selected name
 		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 		if (selection >= 0) {
 			String accnr = (String) model.getValueAt(selection, 0);
 
-			// Show the dialog for adding withdraw amount for the current mane
 			JDialog_Withdraw wd = new JDialog_Withdraw(myframe, accnr);
 			wd.setBounds(430, 15, 275, 140);
 			wd.setVisible(true);
 
-			// compute new amount
 			Double wdraw = Double.parseDouble(amountDeposit);
 			control.transact(TransactionTypes.WITHDRAW, accnr, wdraw);
 			model.setValueAt(String.valueOf(control.getBalance()), selection,
 					10);
 			if (control.getBalance() < 0) {
-				JOptionPane.showMessageDialog(JButton_Withdraw,
+				msg.warning(JButton_Withdraw,
 						" Account " + accnr + " : balance is negative: $"
-								+ String.valueOf(control.getBalance()) + " !",
-						"Warning: negative balance",
-						JOptionPane.WARNING_MESSAGE);
+								+ String.valueOf(control.getBalance()) + " !");
 			}
 		}
 
@@ -476,7 +412,6 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		JDialog_AddInterest pac = new JDialog_AddInterest(myframe);
 		pac.setBounds(430, 15, 200, 200);
 		pac.setVisible(true);
-
 	}
 
 	@Override
@@ -484,4 +419,5 @@ public class BankFrm extends javax.swing.JFrame implements IFrame {
 		this.control = control;
 
 	}
+
 }

@@ -11,10 +11,7 @@ public class GenerateBillReport implements Functor<Account, String> {
 	@Override
 	public void compute(Account element) {
 		List<Entry> entries = element.getEntries();
-	
-		for (Entry e:entries) {
-			
-		}
+		// TODO: We will be implementing the logic for getting all entries;
 	}
 
 	@Override
